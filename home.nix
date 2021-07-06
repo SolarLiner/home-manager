@@ -33,39 +33,40 @@ let
 in
 {
   home.packages = with pkgs; [
-    tidal
+    # tidal
     tree
     cachix
     htop
-    ffmpeg
+    # ffmpeg
     docker-compose
     gh
-    neofetch
+    # neofetch
     jq
     nixfmt
-    julia
-    flamegraph
+    # julia
+    # flamegraph
     pv
-    radare2
-    rust-analyzer
-    ruby
-    faust2
-    faustlive
-    (
+    # radare2
+    # rust-analyzer
+    # ruby
+    # faust2
+    # faustlive
+    /* (
       agda.withPackages
         (p: with p; [ standard-library ])
-    )
-    idris2
-    meson
-    ninja
-    flatpak
-    flatpak-builder
-    niv
+    ) */
+    # idris2
+    # meson
+    # ninja
+    # flatpak
+    # flatpak-builder
+    # niv
     rnix-lsp
-    coq
-    ghc
-    cabal-install
-    haskell-language-server
+    pulumi-bin
+    # coq
+    # ghc
+    # cabal-install
+    # haskell-language-server
     # Fonts
     jetbrains-mono
   ];
@@ -86,7 +87,6 @@ in
     initExtra = ". $HOME/.profile";
     oh-my-zsh = {
       enable = true;
-      theme = "avit";
       plugins = [ "git" "sudo" "pyenv" "nvm" "cargo" "rust" "autojump" "vscode" ];
       extraConfig = ''
         BULLETTRAIN_PROMPT_ORDER=(
@@ -104,6 +104,8 @@ in
         BULLETTRAIN_DIR_EXTENDED=0
         BULLETTRAIN_DIR_BG=black
         BULLETTRAIN_DIR_FG=white
+
+        export NIX_PATH=$HOME/.nix-defexpr/channels''${NIX_PATH:+:}$NIX_PATH
       '';
     };
   };
@@ -116,7 +118,6 @@ in
   programs.neovim = {
     enable = true;
     withNodeJs = true;
-    withPython = true;
     withPython3 = true;
     extraConfig = ''
       set nocompatible
@@ -147,6 +148,12 @@ in
       set termguicolors
       endif
 
+      if has('nvim-0.5.0') || has('patch-8.1.1564')
+        set signcolumn=number
+      else
+        set signcolumn=yes
+      endif
+
       " Custom Vim keybinds
       nnoremap <S-Tab> <<
       vnoremap <S-Tab> <
@@ -156,6 +163,24 @@ in
     '';
 
     plugins = with pkgs.vimPlugins; [
+      {
+        plugin = pkgs.vimUtils.buildVimPluginFrom2Nix {
+          pname = "material.vim";
+          version = "main";
+          src = pkgs.fetchFromGitHub {
+            owner = "kaicataldo";
+            repo = "material.vim";
+            rev = "main";
+            sha256 = "sha256:1ihakmh07j47rzy76242zbipcgdn4yh5bivz09469hr1jj2snyj3";
+          };
+        };
+        config = ''
+          set background = "dark"
+          let g:material_theme_style = 'darker'
+          let g:material_theme_italics = 1
+          colorscheme material
+        '';
+      }
       {
         plugin = airline;
         config = ''
@@ -173,6 +198,8 @@ in
       fzf-vim
       emmet-vim
       vim-sleuth
+      vim-javascript
+      typescript-vim
       {
         plugin = coc-nvim;
         config = ''
@@ -191,10 +218,7 @@ in
           let g:coc_snippet_prev = '<s-tab>'
 
           " Highlight symbol under cursor on CursorHold
-          autocmd CursorHold * silent call CocActionAsync('highlight')
-
-          " Format on save
-          autocmd BufWrite * silent call CocAction('format')
+          autocmd CursorHold * silent! call CocActionAsync('highlight')
 
           " Remap for rename current word
           nmap <leader>rn <Plug>(coc-rename)
@@ -262,9 +286,6 @@ in
 
     extraPackages = with pkgs; [ fzf ];
     extraPython3Packages = ps: with ps; [ python-language-server ];
-  };
-  programs.opam = {
-    enable = true;
   };
   programs.vscode = {
     enable = false;
@@ -343,6 +364,7 @@ in
         rootPatterns = [ "builg.zig" ];
       };
     };
+    "eslint.format.enable" = true;
     "rust-analyzer.server.path" = "${pkgs.rust-analyzer}/bin/rust-analyzer";
     "rust-analyzer.procMacro.enable" = true;
     "rust-analyzer.cargo.loadOutDirsFromCheck" = true;

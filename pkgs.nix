@@ -41,36 +41,24 @@ in
     ];
     vim-plugins = builtins.map githubVimPlugin [
       {
-        repo = "material.vim";
-        owner = "kaicataldo";
-        rev = "main";
-        sha256 = "sha256-AsquzkhACeB5sy8AM6EqUCz4QoDs6cR2UwQDa8orRDY=";
-        config = ''
-          set background=dark
-          let g:material_theme_style = 'darker'
-          let g:material_terminal_italics = 1
-          colorscheme material
-        '';
-      }
-      {
         repo = "vim-auto-save";
         owner = "907th";
-        sha256 = "sha256-gQb41/PGq+77LN5xexjJwdzxW0LinNKYyiXwp3P6lmA=";
+        sha256 = "sha256:0dj45g56n0q4advc9sgch11ghb2h5ahk601gndwy02a0937axjh2";
         config = ''
           let g:auto_save = 1
-          let g:auto_save_events = ["InsertLeave"]
+          " let g:auto_save_events = ["InsertLeave"]
         '';
       }
       { repo = "coc-omnisharp"; owner = "coc-extensions"; sha256 = "sha256-ADlvOZX4q6tcUAV5NPoQyNmBlrUGjPkI2ohNcAjsAEQ="; }
-      { repo = "scvim"; owner = "supercollider"; sha256 = "sha256-0uqEQroKU6rLJ/sEA4y3Jju1QQlLQ6ODmSHSwWbOwfI="; }
-      {
+      # { repo = "scvim"; owner = "supercollider"; sha256 = "sha256-0uqEQroKU6rLJ/sEA4y3Jju1QQlLQ6ODmSHSwWbOwfI="; }
+      /* {
         repo = "vim-tidal";
         owner = "tidalcycles";
         sha256 = "sha256-zR3DQU3PpfTEz2rXOaOHd2Q2T7V8KQpiiAod0tECSlw=";
         config = ''
           let g:tidal_target = "terminal"
         '';
-      }
+      } */
       { owner = "gmoe"; repo = "vim-faust"; rev = "main"; sha256 = "sha256-hK2ZoZCKR3oeqXhq7FgoAY8/S/+dCMUMwncHYbHxq/w="; }
     ];
     zsh-plugins = [
