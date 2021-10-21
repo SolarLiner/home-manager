@@ -39,7 +39,6 @@ in
     htop
     # ffmpeg
     docker-compose
-    gh
     # neofetch
     jq
     nixfmt
@@ -76,6 +75,28 @@ in
   programs.home-manager.enable = true;
   programs.autojump.enable = true;
   programs.bash.enable = false;
+  programs.exa = {
+    enable = true;
+    enableAliases = true;
+  };
+  programs.git = {
+    package = pkgs.gitAndTools.gitFull;
+    enable = true;
+    delta.enable = true;
+    lfs.enable = true;
+    userName = "Nathan Graule";
+    userEmail = "solarliner@gmail.com";
+  };
+  programs.gh.enable = true;
+  programs.opam = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+  programs.starship = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+  };
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -108,12 +129,6 @@ in
         export NIX_PATH=$HOME/.nix-defexpr/channels''${NIX_PATH:+:}$NIX_PATH
       '';
     };
-  };
-  programs.git = {
-    package = pkgs.gitAndTools.gitFull;
-    enable = true;
-    userName = "Nathan Graule";
-    userEmail = "solarliner@gmail.com";
   };
   programs.neovim = {
     enable = true;
@@ -171,7 +186,7 @@ in
             owner = "kaicataldo";
             repo = "material.vim";
             rev = "main";
-            sha256 = "sha256:1ihakmh07j47rzy76242zbipcgdn4yh5bivz09469hr1jj2snyj3";
+            sha256 = "sha256:1wi1brm1yml4xw0zpc6q5y0ql145v1hw5rbbcsgafagsipiz4av3";
           };
         };
         config = ''
@@ -285,7 +300,7 @@ in
     ] ++ extraPkgs.vim-plugins;
 
     extraPackages = with pkgs; [ fzf ];
-    extraPython3Packages = ps: with ps; [ python-language-server ];
+    extraPython3Packages = ps: with ps; [ /* python-language-server */ ];
   };
   programs.vscode = {
     enable = false;

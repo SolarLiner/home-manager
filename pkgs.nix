@@ -82,12 +82,12 @@ in
           sha256 = "1ff1z2snbl9rx3mrcjbamlvc21fh9l32zi2hh9vcgcwbjwn5kikg";
         };
       }
-      {
+      /* {
         name = "bullet-train";
         src = builtins.fetchTarball {
           url = "https://github.com/caiogondim/bullet-train.zsh/archive/master.tar.gz";
         };
         file = "bullet-train.zsh-theme";
-      }
+      } */
     ];
   }
