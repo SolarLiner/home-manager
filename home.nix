@@ -297,6 +297,8 @@ in
       idris2-vim
       auto-pairs
       zig-vim
+      nerdtree
+      nerdtree-git-plugin
     ] ++ extraPkgs.vim-plugins;
 
     extraPackages = with pkgs; [ fzf ];
