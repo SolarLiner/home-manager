@@ -34,6 +34,7 @@ in
 {
   home.packages = with pkgs; [
     # tidal
+    coq
     tree
     cachix
     htop
@@ -74,6 +75,7 @@ in
 
   programs.home-manager.enable = true;
   programs.autojump.enable = true;
+  programs.bat.enable = true;
   programs.bash.enable = false;
   programs.exa = {
     enable = true;
