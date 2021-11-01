@@ -72,7 +72,7 @@ in
           sha256 = "0c2yzbd4y0fyn9yycrxh32am27r0df0x3r526gf1pmyqiv49rg5z";
         };
       }
-      {
+      /* {
         name = "fast-syntax-highlighting";
         file = "fast-syntax-highlighting.plugin.zsh";
         src = pkgs.fetchFromGitHub {
@@ -82,7 +82,7 @@ in
           sha256 = "1ff1z2snbl9rx3mrcjbamlvc21fh9l32zi2hh9vcgcwbjwn5kikg";
         };
       }
-      /* {
+      {
         name = "bullet-train";
         src = builtins.fetchTarball {
           url = "https://github.com/caiogondim/bullet-train.zsh/archive/master.tar.gz";
