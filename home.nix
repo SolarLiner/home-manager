@@ -89,7 +89,13 @@ in
     userName = "Nathan Graule";
     userEmail = "solarliner@gmail.com";
   };
-  programs.gh.enable = true;
+  programs.gh = {
+    enable = true;
+    settings = {
+      prompt = "enabled";
+      git_protocol = "ssh";
+    };
+  };
   programs.opam = {
     enable = true;
     enableZshIntegration = true;
@@ -286,6 +292,17 @@ in
       coc-vimlsp
       {
         plugin = Coqtail;
+        config = ''
+          augroup CoqtailHighlights
+            autocmd!
+            autocmd ColorScheme *
+              \  hi def CoqtailChecked guibg=DarkGreen guifg=White
+              \| hi def CoqtailSent    guibg=DarkBlue  guifg=White
+          augroup END
+          augroup CoqtailEnable
+            autocmd FileType *.v CoqStart
+          augroup END
+          '';
         # config = ''
         # augroup CoqtailHighlights
         # autocmd!
