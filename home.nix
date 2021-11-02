@@ -109,6 +109,7 @@ in
     enable = true;
     enableCompletion = true;
     enableAutosuggestions = true;
+    enableSyntaxHighlighting = true;
     sessionVariables = {
       EDITOR = "nvim";
     };
