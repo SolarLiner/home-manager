@@ -77,6 +77,17 @@ in
   programs.autojump.enable = true;
   programs.bat.enable = true;
   programs.bash.enable = false;
+  programs.nushell = {
+    enable = true;
+    settings = {
+      startup = [
+        "mkdir ~/.cache/starship"
+        "starship init nu | save ~/.cache/starship/init.nu"
+        "source ~/.cache/starship/init.nu"
+      ];
+      prompt = "starship_prompt";
+    };
+  };
   programs.exa = {
     enable = true;
     enableAliases = true;
@@ -114,7 +125,11 @@ in
       EDITOR = "nvim";
     };
     plugins = extraPkgs.zsh-plugins;
-    initExtra = ". $HOME/.profile";
+    initExtra = ''
+      if [ -e $HOME/.profile ]; then
+        . $HOME/.profile
+      fi
+    '';
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "sudo" "pyenv" "nvm" "cargo" "rust" "autojump" "vscode" ];
