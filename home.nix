@@ -30,6 +30,19 @@ let
           ln -s $src/bin/tidal $out/bin
         '';
       };
+      deno = pkgs.stdenvNoCC.mkDerivation rec {
+        pname = "deno";
+        version = "1.16.2";
+        src = pkgs.fetchzip {
+          url = "https://github.com/denoland/deno/releases/download/v${version}/deno-x86_64-unknown-linux-gnu.zip";
+          sha256 = "sha256-YOPFvQ1cv3UE8z3TNqAn9UteJUFGz8zn1Z+e9wkF+TQ=";
+        };
+        buildPhase = "";
+        installPhase = ''
+          mkdir -p $out/bin
+          cp $src/deno $out/bin
+        '';
+      };
 in
 {
   home.packages = with pkgs; [
@@ -38,6 +51,7 @@ in
     tree
     cachix
     htop
+    deno
     # ffmpeg
     docker-compose
     # neofetch
