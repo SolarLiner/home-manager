@@ -154,8 +154,16 @@ in
 
       # Rustup
       export CARGO_HOME=$HOME/.cargo
-      if [[ ! -e $CARGO_HOME ]]; then
+      if [[ -e $CARGO_HOME ]]; then
         export PATH=$CARGO_HOME/bin:$PATH
+      fi
+
+      # Pyenv
+      export PYENV_ROOT=$HOME/.pyenv
+      if [[ -e $PYENV_ROOT ]]; then
+        export PATH=$PYENV_ROOT/bin:$PATH
+        eval "$(pyenv init --path)"
+        eval "$(pyenv virtualenv-init -)"
       fi
     '';
     oh-my-zsh = {
