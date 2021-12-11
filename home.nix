@@ -425,6 +425,13 @@ in
     };
   };
 
+  home.file.".ideavimrc".text = ''
+    set clipboard=ideaput
+    set command
+    set easymotion
+    set highlightedyank
+    set surround
+    '';
   xdg.configFile."nvim/coc-settings.json".text = builtins.toJSON {
     languageserver = {
       haskell = {
