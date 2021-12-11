@@ -247,7 +247,7 @@ in
             owner = "kaicataldo";
             repo = "material.vim";
             rev = "main";
-            sha256 = "sha256:1wi1brm1yml4xw0zpc6q5y0ql145v1hw5rbbcsgafagsipiz4av3";
+            sha256 = "sha256-0QwN8tbCv27qxlGYVXnwhOJ9FA3KRDPrr6oFqaDJlNM=";
           };
         };
         config = ''
