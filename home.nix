@@ -51,6 +51,7 @@ in
     tree
     cachix
     htop
+    dotnet-sdk_6
     deno
     # ffmpeg
     docker-compose
