@@ -1,5 +1,6 @@
 { pkgs, ... }:
 let
+  fetchstr = url: builtins.readFile (builtins.fetchurl url);
   nixGLrepo = import "${(builtins.fetchTarball "https://github.com/guibou/nixGL/archive/master.tar.gz")}/nixGL.nix";
   nixGL = pkgs.callPackage nixGLrepo {};
   extraPkgs = import ./pkgs.nix {};
@@ -431,6 +432,18 @@ in
     set easymotion
     set highlightedyank
     set surround
+    '';
+  xdg.configFile."kitty/kitty.conf".text = ''
+    font_family JetBrains Mono
+    font_size 10
+    disable_ligatures cursor
+    enable_audio_bell no
+    visual_bell_duration 0.1
+    window_border_width 1pt
+    window_margin_width 8
+    tab_bar_style powerline
+
+    ${fetchstr "https://raw.githubusercontent.com/kdrag0n/base16-kitty/master/colors/base16-material-darker.conf"}
     '';
   xdg.configFile."nvim/coc-settings.json".text = builtins.toJSON {
     languageserver = {
