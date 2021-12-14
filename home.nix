@@ -199,14 +199,23 @@ in
     extraConfig = ''
       set nocompatible
       set nobackup
+      set hidden
+      set list
+      set listchars=tab:↦\ ,trail:⬝
       set clipboard=unnamedplus
       set mouse=a
+      set signcolumn=yes:2
 
       set relativenumber
       set expandtab
       set softtabstop=4
       set tabstop=4
       set shiftwidth=4
+
+      set wildmenu
+      set wildmode=longest:full,full
+      set scrolloff=8
+      set sidescrolloff=8
 
       set updatetime=300
 
@@ -232,11 +241,16 @@ in
       endif
 
       " Custom Vim keybinds
+      vnoremap < <gv
+      vnoremap > >gv
       nnoremap <S-Tab> <<
-      vnoremap <S-Tab> <
+      vnoremap <S-Tab> <gv
       inoremap <S-Tab> <C-d>
       nnoremap <Tab> >>
-      vnoremap <Tab> >
+      vnoremap <Tab> >gv
+
+      " Open files highlithed under cursor
+      map gf :edit <cfile><cr>
     '';
 
     plugins = with pkgs.vimPlugins; [
@@ -276,7 +290,16 @@ in
       emmet-vim
       vim-sleuth
       vim-javascript
+      vim-polyglot
       typescript-vim
+      agda-vim
+      fugitive
+      idris2-vim
+      auto-pairs
+      zig-vim
+      nerdtree
+      nerdtree-git-plugin
+      popup-nvim
       {
         plugin = coc-nvim;
         config = ''
@@ -365,13 +388,6 @@ in
         #   \| hi def CoqtailSent ctermbg=7
         # augroup END'';
       }
-      agda-vim
-      fugitive
-      idris2-vim
-      auto-pairs
-      zig-vim
-      nerdtree
-      nerdtree-git-plugin
     ] ++ extraPkgs.vim-plugins;
 
     extraPackages = with pkgs; [ fzf ];
@@ -436,6 +452,7 @@ in
   xdg.configFile."kitty/kitty.conf".text = ''
     font_family JetBrains Mono
     font_size 10
+    adjust_line_height 130%
     disable_ligatures cursor
     enable_audio_bell no
     visual_bell_duration 0.1
