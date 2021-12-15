@@ -208,7 +208,12 @@
     '';
 
     plugins = with pkgs.vimPlugins; [
-      vim-autosave
+      {
+        plugin = vim-autosave;
+        config = ''
+          let g:auto_save = 1  " enable AutoSave on Vim startup
+          '';
+      }
       {
         plugin = material-vim;
         config = ''
@@ -245,7 +250,9 @@
       zig-vim
       nerdtree
       nerdtree-git-plugin
+      vim-devicons
       popup-nvim
+      markdown-preview-nvim
       {
         plugin = coc-nvim;
         config = ''
