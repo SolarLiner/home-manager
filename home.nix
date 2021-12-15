@@ -1,4 +1,4 @@
-{ pkgs, vim-autosave, material-vim, coc-omnisharp, deno, zsh-256color, ... }:
+{ pkgs, inputs, packages, ... }:
 {
   home.packages = with pkgs; [
     # tidal
@@ -7,7 +7,7 @@
     cachix
     htop
     # dotnet-sdk_6
-    deno
+    packages.deno
     # ffmpeg
     docker-compose
     # neofetch
@@ -17,7 +17,7 @@
     # flamegraph
     pv
     # radare2
-    # rust-analyzer
+    rust-analyzer
     # ruby
     # faust2
     # faustlive
@@ -94,7 +94,7 @@
     sessionVariables = {
       EDITOR = "nvim";
     };
-    plugins = [ zsh-256color ];
+    plugins = [ packages.zsh-256color ];
     initExtra = ''
       if [ -e $HOME/.profile ]; then
         . $HOME/.profile
@@ -209,13 +209,13 @@
 
     plugins = with pkgs.vimPlugins; [
       {
-        plugin = vim-autosave;
+        plugin = packages.vim-autosave;
         config = ''
           let g:auto_save = 1  " enable AutoSave on Vim startup
           '';
       }
       {
-        plugin = material-vim;
+        plugin = packages.material-vim;
         config = ''
           set background = "dark"
           let g:material_theme_style = 'darker'
@@ -254,94 +254,110 @@
       popup-nvim
       markdown-preview-nvim
       {
-        plugin = coc-nvim;
-        config = ''
-          inoremap <silent><expr> <TAB>
-          \ pumvisible() ? coc#_select_confirm() :
-          \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump','''])\<CR>" :
-          \ <SID>check_back_space() ? "\<TAB>" :
-          \ coc#refresh()
-
-          function! s:check_back_space() abort
-          let col = col('.') - 1
-          return !col || getline('.')[col - 1]  =~# '\s'
-          endfunction
-
-          let g:coc_snippet_next = '<tab>'
-          let g:coc_snippet_prev = '<s-tab>'
-
-          " Highlight symbol under cursor on CursorHold
-          autocmd CursorHold * silent! call CocActionAsync('highlight')
-
-          " Remap for rename current word
-          nmap <leader>rn <Plug>(coc-rename)
-
-          " Remap for hover action
-          nmap <leader>h :call CocAction('doHover')<CR>
-
-          " Remap for format selected region
-          xmap <leader>f  <Plug>(coc-format-selected)
-          nmap <leader>f  <Plug>(coc-format)
-
-          " Remap keys for gotos
-          nmap <silent> gd <Plug>(coc-definition)
-          nmap <silent> gy <Plug>(coc-type-definition)
-          nmap <silent> gi <Plug>(coc-implementation)
-          nmap <silent> gr <Plug>(coc-references)
-
-          " Remap for do codeAction of current line
-          nmap <leader>ac  <Plug>(coc-codeaction)
-          " Fix autofix problem of current line
-          nmap <leader>fc  <Plug>(coc-fix-current)
-
-          " Search workspace symbols
-          nmap <leader>s :<C-u>CocList -I symbols<cr>
-
-          " Add status line support, for integration with other plugin, checkout `:h coc-status`
-          set statusline^=%{coc#status()}%{get(b:,'coc_current_function',''')}
-
-          " Add comments to JSON
-          autocmd FileType json syntax match Comment +\/\/.\+$+
-
-          " use <c-space>for trigger completion
-          inoremap <silent><expr> <c-space> coc#refresh()
-        '';
-      }
-      {
         plugin = editorconfig-vim;
         config = ''let g:EditorConfig_exclude_patterns = ["fugitive://.\*"]'';
       }
-      coc-rust-analyzer
-      coc-git
-      coc-python
-      coc-clangd
-      coc-tsserver
-      coc-omnisharp
-      coc-json
-      coc-yaml
-      coc-html
-      coc-vimlsp
       {
-        plugin = Coqtail;
+        plugin = nvim-lspconfig;
         config = ''
-          augroup CoqtailHighlights
-            autocmd!
-            autocmd ColorScheme *
-              \  hi def CoqtailChecked guibg=DarkGreen guifg=White
-              \| hi def CoqtailSent    guibg=DarkBlue  guifg=White
-          augroup END
-          augroup CoqtailEnable
-            autocmd FileType *.v CoqStart
-          augroup END
-        '';
-        # config = ''
-        # augroup CoqtailHighlights
-        # autocmd!
-        # autocmd ColorScheme *
-        # \  hi def CoqtailChecked ctermbg = 4
-        #   \| hi def CoqtailSent ctermbg=7
-        # augroup END'';
+          lua << EOF
+          ${builtins.readFile ./nvim/lspconfig.lua}
+          EOF
+          '';
       }
+      { 
+        plugin = nvim-cmp;
+        config = ''
+          lua << EOF
+          ${builtins.readFile ./nvim/cmp.lua}
+          EOF
+          '';
+      }
+      # {
+      #   plugin = coc-nvim;
+      #   config = ''
+      #     inoremap <silent><expr> <TAB>
+      #     \ pumvisible() ? coc#_select_confirm() :
+      #     \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump','''])\<CR>" :
+      #     \ <SID>check_back_space() ? "\<TAB>" :
+      #     \ coc#refresh()
+      # 
+      #     function! s:check_back_space() abort
+      #     let col = col('.') - 1
+      #     return !col || getline('.')[col - 1]  =~# '\s'
+      #     endfunction
+      # 
+      #     let g:coc_snippet_next = '<tab>'
+      #     let g:coc_snippet_prev = '<s-tab>'
+      # 
+      #     " Highlight symbol under cursor on CursorHold
+      #     autocmd CursorHold * silent! call CocActionAsync('highlight')
+      # 
+      #     " Remap for rename current word
+      #     nmap <leader>rn <Plug>(coc-rename)
+      # 
+      #     " Remap for hover action
+      #     nmap <leader>h :call CocAction('doHover')<CR>
+      # 
+      #     " Remap for format selected region
+      #     xmap <leader>f  <Plug>(coc-format-selected)
+      #     nmap <leader>f  <Plug>(coc-format)
+      # 
+      #     " Remap keys for gotos
+      #     nmap <silent> gd <Plug>(coc-definition)
+      #     nmap <silent> gy <Plug>(coc-type-definition)
+      #     nmap <silent> gi <Plug>(coc-implementation)
+      #     nmap <silent> gr <Plug>(coc-references)
+      # 
+      #     " Remap for do codeAction of current line
+      #     nmap <leader>ac  <Plug>(coc-codeaction)
+      #     " Fix autofix problem of current line
+      #     nmap <leader>fc  <Plug>(coc-fix-current)
+      # 
+      #     " Search workspace symbols
+      #     nmap <leader>s :<C-u>CocList -I symbols<cr>
+      # 
+      #     " Add status line support, for integration with other plugin, checkout `:h coc-status`
+      #     set statusline^=%{coc#status()}%{get(b:,'coc_current_function',''')}
+      # 
+      #     " Add comments to JSON
+      #     autocmd FileType json syntax match Comment +\/\/.\+$+
+      # 
+      #     " use <c-space>for trigger completion
+      #     inoremap <silent><expr> <c-space> coc#refresh()
+      #   '';
+      # }
+      # coc-rust-analyzer
+      # coc-git
+      # coc-python
+      # coc-clangd
+      # coc-tsserver
+      # coc-omnisharp
+      # coc-json
+      # coc-yaml
+      # coc-html
+      # coc-vimlsp
+      # {
+      #   plugin = Coqtail;
+      #   config = ''
+      #     augroup CoqtailHighlights
+      #       autocmd!
+      #       autocmd ColorScheme *
+      #         \  hi def CoqtailChecked guibg=DarkGreen guifg=White
+      #         \| hi def CoqtailSent    guibg=DarkBlue  guifg=White
+      #     augroup END
+      #     augroup CoqtailEnable
+      #       autocmd FileType *.v CoqStart
+      #     augroup END
+      #   '';
+      #   # config = ''
+      #   # augroup CoqtailHighlights
+      #   # autocmd!
+      #   # autocmd ColorScheme *
+      #   # \  hi def CoqtailChecked ctermbg = 4
+      #   #   \| hi def CoqtailSent ctermbg=7
+      #   # augroup END'';
+      # }
     ];
 
     extraPackages = with pkgs; [ fzf ];

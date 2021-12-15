@@ -21,6 +21,10 @@
       url = github:kaicataldo/material.vim;
       flake = false;
     };
+    nvim-lsp-installer = {
+      url = github:williamboman/nvim-lsp-installer;
+      flake = false;
+    };
     coc-omnisharp = {
       url = github:coc-extensions/coc-omnisharp;
       flake = false;
@@ -35,48 +39,55 @@
     };
   };
   outputs = inputs:
-    let username = "solarliner"; in
-    with inputs.flake-utils.lib; eachDefaultSystem (system:
-      let
-        pkgs = import inputs.nixpkgs { inherit system; };
-        deno = pkgs.stdenvNoCC.mkDerivation {
-          pname = "deno";
-          version = "1.16.2";
-          src = inputs.deno;
-          phases = [ "installPhase" ];
-          dontUnpack = true;
-          installPhase = ''
-            mkdir -p $out/bin
-            cp $src $out/bin
-          '';
-        };
-        coc-omnisharp = pkgs.vimUtils.buildVimPluginFrom2Nix {
-          pname = "coc-omnisharp";
-          version = "master";
-          src = inputs.coc-omnisharp;
-        };
-        material-vim = pkgs.vimUtils.buildVimPluginFrom2Nix {
-          pname = "material.vim";
-          version = "master";
-          src = inputs.material-vim;
-        };
-        vim-autosave = pkgs.vimUtils.buildVimPluginFrom2Nix {
-          pname = "vim-autosave";
-          version = "master";
-          src = inputs.vim-autosave;
-        };
-        zsh-256color = rec {
-          name = "zsh-256color";
-          file = "${name}.plugin.zsh";
-          src = inputs.zsh-256color;
-        };
-      in
-      {
-        packages.homeConfigurations."${username}" = inputs.home-manager.lib.homeManagerConfiguration {
-          inherit system username;
-          homeDirectory = "/home/${username}";
-          configuration.imports = [ ./home.nix ];
-          extraSpecialArgs = { inherit deno vim-autosave material-vim coc-omnisharp zsh-256color; };
-        };
-      });
-}
+  let username = "solarliner"; in
+  with inputs.flake-utils.lib; eachDefaultSystem (system:
+  let
+  pkgs = import inputs.nixpkgs { inherit system; };
+  in
+  {
+  packages = {
+  deno = pkgs.stdenvNoCC.mkDerivation {
+  pname = "deno";
+  version = "1.16.4";
+  src = inputs.deno;
+  phases = [ "installPhase" ];
+  dontUnpack = true;
+  installPhase = ''
+  mkdir -p $out/bin
+  cp $src $out/bin
+  '';
+  };
+  coc-omnisharp = pkgs.vimUtils.buildVimPluginFrom2Nix {
+  pname = "coc-omnisharp";
+  version = "master";
+  src = inputs.coc-omnisharp;
+  };
+  material-vim = pkgs.vimUtils.buildVimPluginFrom2Nix {
+  pname = "material.vim";
+  version = "master";
+  src = inputs.material-vim;
+  };
+  nvim-lsp-installer = pkgs.vimUtils.buildVimPluginFrom2Nix {
+  pname = "nvim-lsp-installer";
+  version = "master";
+  src = inputs.nvim-lsp-installer;
+  };
+  vim-autosave = pkgs.vimUtils.buildVimPluginFrom2Nix {
+  pname = "vim-autosave";
+  version = "master";
+  src = inputs.vim-autosave;
+  };
+  zsh-256color = rec {
+  name = "zsh-256color";
+  file = "${name}.plugin.zsh";
+  src = inputs.zsh-256color;
+  };
+  };
+  packages.homeConfigurations."${username}" = inputs.home-manager.lib.homeManagerConfiguration {
+  inherit system username;
+  homeDirectory = "/home/${username}";
+  configuration.imports = [ ./home.nix ];
+  extraSpecialArgs = { inherit inputs; packages = inputs.self.packages."${system}"; };
+  };
+  });
+  }

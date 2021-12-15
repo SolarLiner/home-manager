@@ -105,6 +105,22 @@
         "type": "indirect"
       }
     },
+    "nvim-lsp-installer": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1639488373,
+        "narHash": "sha256-6h21Za7QBPzrHzlG20zAyB96CWXf0iW46w9Jlct+3m4=",
+        "owner": "williamboman",
+        "repo": "nvim-lsp-installer",
+        "rev": "3c46fc4f96165d96733c7414edd047349bd621d3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "williamboman",
+        "repo": "nvim-lsp-installer",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "coc-omnisharp": "coc-omnisharp",
@@ -113,6 +129,7 @@
         "home-manager": "home-manager",
         "material-vim": "material-vim",
         "nixpkgs": "nixpkgs_2",
+        "nvim-lsp-installer": "nvim-lsp-installer",
         "vim-autosave": "vim-autosave",
         "zsh-256color": "zsh-256color"
       }
