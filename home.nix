@@ -1,50 +1,4 @@
-{ pkgs, ... }:
-let
-  fetchstr = url: builtins.readFile (builtins.fetchurl url);
-  nixGLrepo = import "${(builtins.fetchTarball "https://github.com/guibou/nixGL/archive/master.tar.gz")}/nixGL.nix";
-  nixGL = pkgs.callPackage nixGLrepo {};
-  extraPkgs = import ./pkgs.nix {};
-  flatten = set: with pkgs.lib; let
-    isNameValue = v: with builtins; hasAttr "name" v && hasAttr "value" v;
-    attrs = attrsets.mapAttrsRecursive (
-      path: attrsets.nameValuePair (strings.concatStrings (strings.intersperse "." path))
-    );
-    valsDeep = attrsets.collect isNameValue (attrs set);
-    vals = lists.flatten valsDeep;
-  in
-    builtins.listToAttrs vals;
-  tidal =
-    pkgs.stdenvNoCC.mkDerivation
-      {
-        pname = "tidal";
-        version = "master";
-        src = pkgs.fetchFromGitHub {
-          repo = "vim-tidal";
-          owner = "tidalcycles";
-          rev = "master";
-          sha256 = "sha256-zR3DQU3PpfTEz2rXOaOHd2Q2T7V8KQpiiAod0tECSlw=";
-        };
-        nativeBuildInputs = with pkgs; [ coreutils ];
-        phases = [ "unpackPhase" "installPhase" ];
-        installPhase = ''
-          mkdir -p $out/bin
-          ln -s $src/bin/tidal $out/bin
-        '';
-      };
-      deno = pkgs.stdenvNoCC.mkDerivation rec {
-        pname = "deno";
-        version = "1.16.2";
-        src = pkgs.fetchzip {
-          url = "https://github.com/denoland/deno/releases/download/v${version}/deno-x86_64-unknown-linux-gnu.zip";
-          sha256 = "sha256-YOPFvQ1cv3UE8z3TNqAn9UteJUFGz8zn1Z+e9wkF+TQ=";
-        };
-        buildPhase = "";
-        installPhase = ''
-          mkdir -p $out/bin
-          cp $src/deno $out/bin
-        '';
-      };
-in
+{ pkgs, vim-autosave, material-vim, coc-omnisharp, deno, zsh-256color, ... }:
 {
   home.packages = with pkgs; [
     # tidal
@@ -69,8 +23,8 @@ in
     # faustlive
     /* (
       agda.withPackages
-        (p: with p; [ standard-library ])
-    ) */
+      (p: with p; [ standard-library ])
+      ) */
     # idris2
     # meson
     # ninja
@@ -140,7 +94,7 @@ in
     sessionVariables = {
       EDITOR = "nvim";
     };
-    plugins = extraPkgs.zsh-plugins;
+    plugins = [ zsh-256color ];
     initExtra = ''
       if [ -e $HOME/.profile ]; then
         . $HOME/.profile
@@ -254,17 +208,9 @@ in
     '';
 
     plugins = with pkgs.vimPlugins; [
+      vim-autosave
       {
-        plugin = pkgs.vimUtils.buildVimPluginFrom2Nix {
-          pname = "material.vim";
-          version = "main";
-          src = pkgs.fetchFromGitHub {
-            owner = "kaicataldo";
-            repo = "material.vim";
-            rev = "main";
-            sha256 = "sha256-0QwN8tbCv27qxlGYVXnwhOJ9FA3KRDPrr6oFqaDJlNM=";
-          };
-        };
+        plugin = material-vim;
         config = ''
           set background = "dark"
           let g:material_theme_style = 'darker'
@@ -363,6 +309,7 @@ in
       coc-python
       coc-clangd
       coc-tsserver
+      coc-omnisharp
       coc-json
       coc-yaml
       coc-html
@@ -379,7 +326,7 @@ in
           augroup CoqtailEnable
             autocmd FileType *.v CoqStart
           augroup END
-          '';
+        '';
         # config = ''
         # augroup CoqtailHighlights
         # autocmd!
@@ -388,58 +335,10 @@ in
         #   \| hi def CoqtailSent ctermbg=7
         # augroup END'';
       }
-    ] ++ extraPkgs.vim-plugins;
+    ];
 
     extraPackages = with pkgs; [ fzf ];
     extraPython3Packages = ps: with ps; [ /* python-language-server */ ];
-  };
-  programs.vscode = {
-    enable = false;
-    package = (
-      pkgs.writeScriptBin "code.sh" ''
-        #!/usr/bin/env bash
-              code $@
-      ''
-    ).overrideAttrs (s: s // (pkgs.lib.attrsets.getAttrs [ "pname" "version" "name" ] pkgs.vscode));
-    extensions = with pkgs.vscode-extensions; [
-      bbenoist.Nix
-      haskell.haskell
-      ms-python.python
-      ms-python.vscode-pylance
-      ms-vscode-remote.remote-ssh
-      ocamllabs.ocaml-platform
-      dhall.dhall-lang
-      vscodevim.vim
-      jnoortheen.nix-ide
-      tamasfe.even-better-toml
-    ] ++ extraPkgs.vscode-extensions;
-    userSettings = flatten {
-      update.mode = "none";
-      editor = {
-        formatOnSave = true;
-        formatOnPaste = true;
-        minimap.renderCharacters = false;
-        fontFamily = "'JetBrains Mono'";
-      };
-      git = {
-        enableSmartCommit = true;
-        autofetch = true;
-      };
-      licenser = {
-        author = "Nathan Graule";
-        license = "MIT";
-      };
-      files.autoSave = "onFocusChange";
-      nix.enableLanguageServer = true;
-      window = {
-        menuBarVisibility = "compact";
-        titleBarStyle = "custom";
-      };
-      workbench = {
-        colorTheme = "Material Theme Darker High Contrast";
-        iconTheme = "eq-material-theme-icons-darker";
-      };
-    };
   };
 
   home.file.".ideavimrc".text = ''
@@ -448,20 +347,23 @@ in
     set easymotion
     set highlightedyank
     set surround
-    '';
-  xdg.configFile."kitty/kitty.conf".text = ''
+  '';
+  xdg.configFile."kitty/kitty.conf".text =
+    let theme = builtins.fetchurl {
+      url = "https://raw.githubusercontent.com/kdrag0n/base16-kitty/master/colors/base16-material-darker.conf";
+      sha256 = "sha256:01rmlpgclvhimr92f0v95301dz73iakgr61zcifcia6054yj12fd";
+    }; in ''
     font_family JetBrains Mono
     font_size 10
     adjust_line_height 130%
     disable_ligatures cursor
     enable_audio_bell no
     visual_bell_duration 0.1
-    window_border_width 1pt
     window_margin_width 8
     tab_bar_style powerline
 
-    ${fetchstr "https://raw.githubusercontent.com/kdrag0n/base16-kitty/master/colors/base16-material-darker.conf"}
-    '';
+    include ${theme}
+  '';
   xdg.configFile."nvim/coc-settings.json".text = builtins.toJSON {
     languageserver = {
       haskell = {
