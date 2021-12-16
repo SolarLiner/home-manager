@@ -253,23 +253,27 @@
       vim-devicons
       popup-nvim
       markdown-preview-nvim
+      packages.nvim-snippy
+      packages.cmp-nvim-lsp
+      packages.cmp-snippy
       {
         plugin = editorconfig-vim;
         config = ''let g:EditorConfig_exclude_patterns = ["fugitive://.\*"]'';
+      }
+      { 
+        plugin = nvim-cmp;
+        config = ''
+          set completeopt=menu,menuone,noselect
+          lua << EOF
+          ${builtins.readFile ./nvim/cmp.lua}
+          EOF
+          '';
       }
       {
         plugin = nvim-lspconfig;
         config = ''
           lua << EOF
           ${builtins.readFile ./nvim/lspconfig.lua}
-          EOF
-          '';
-      }
-      { 
-        plugin = nvim-cmp;
-        config = ''
-          lua << EOF
-          ${builtins.readFile ./nvim/cmp.lua}
           EOF
           '';
       }

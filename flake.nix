@@ -25,6 +25,18 @@
       url = github:williamboman/nvim-lsp-installer;
       flake = false;
     };
+    nvim-snippy = {
+      url = github:dcampos/nvim-snippy;
+      flake = false;
+    };
+    cmp-nvim-lsp = {
+      url = github:hrsh7th/cmp-nvim-lsp;
+      flake = false;
+    };
+    cmp-snippy = {
+      url = github:dcampos/cmp-snippy;
+      flake = false;
+    };
     coc-omnisharp = {
       url = github:coc-extensions/coc-omnisharp;
       flake = false;
@@ -66,6 +78,21 @@
   pname = "material.vim";
   version = "master";
   src = inputs.material-vim;
+  };
+  nvim-snippy = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "nix-snippy";
+    version = "master";
+    src = inputs.nvim-snippy;
+  };
+  cmp-snippy = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "cmp-snippy";
+    version = "master";
+    src = inputs.cmp-snippy;
+  };
+  cmp-nvim-lsp = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "cmp-nvim-lsp";
+    version = "master";
+    src = inputs.cmp-nvim-lsp;
   };
   nvim-lsp-installer = pkgs.vimUtils.buildVimPluginFrom2Nix {
   pname = "nvim-lsp-installer";

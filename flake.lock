@@ -1,5 +1,37 @@
 {
   "nodes": {
+    "cmp-nvim-lsp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1636543770,
+        "narHash": "sha256-jLfW4xoYnEOWa7oWSmkB7vNxu9Jgttbme+nTiAC92so=",
+        "owner": "hrsh7th",
+        "repo": "cmp-nvim-lsp",
+        "rev": "134117299ff9e34adde30a735cd8ca9cf8f3db81",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hrsh7th",
+        "repo": "cmp-nvim-lsp",
+        "type": "github"
+      }
+    },
+    "cmp-snippy": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1632148155,
+        "narHash": "sha256-vseoNZtB8jPGAJD8zFJigwKn11rXsNy04ipg0fYM46k=",
+        "owner": "dcampos",
+        "repo": "cmp-snippy",
+        "rev": "9af1635fe40385ffa3dabf322039cb5ae1fd7d35",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dcampos",
+        "repo": "cmp-snippy",
+        "type": "github"
+      }
+    },
     "coc-omnisharp": {
       "flake": false,
       "locked": {
@@ -121,8 +153,26 @@
         "type": "github"
       }
     },
+    "nvim-snippy": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1638816966,
+        "narHash": "sha256-Or+ZqmfA/X2PHEew9+Bm+5oWjbGXL6+4a3m394IY/SU=",
+        "owner": "dcampos",
+        "repo": "nvim-snippy",
+        "rev": "bd69c1f1628e793b3e921dd11f39779bc7e439cd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dcampos",
+        "repo": "nvim-snippy",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
+        "cmp-nvim-lsp": "cmp-nvim-lsp",
+        "cmp-snippy": "cmp-snippy",
         "coc-omnisharp": "coc-omnisharp",
         "deno": "deno",
         "flake-utils": "flake-utils",
@@ -130,6 +180,7 @@
         "material-vim": "material-vim",
         "nixpkgs": "nixpkgs_2",
         "nvim-lsp-installer": "nvim-lsp-installer",
+        "nvim-snippy": "nvim-snippy",
         "vim-autosave": "vim-autosave",
         "zsh-256color": "zsh-256color"
       }
