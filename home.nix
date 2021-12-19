@@ -1,42 +1,28 @@
 { pkgs, inputs, packages, ... }:
 {
   home.packages = with pkgs; [
-    # tidal
-    coq
+    # Utilities
     tree
+    jq
     cachix
     htop
-    # dotnet-sdk_6
-    packages.deno
-    # ffmpeg
-    docker-compose
-    # neofetch
-    jq
-    nixfmt
-    # julia
-    # flamegraph
+    neofetch
     pv
-    # radare2
-    rust-analyzer
-    # ruby
-    # faust2
-    # faustlive
-    /* (
-      agda.withPackages
-      (p: with p; [ standard-library ])
-      ) */
-    # idris2
-    # meson
-    # ninja
-    # flatpak
-    # flatpak-builder
-    # niv
+    # Language tooling
+    coq
+    nixfmt
+    packages.deno
+    docker-compose
     rnix-lsp
     pulumi-bin
-    # coq
-    # ghc
-    # cabal-install
-    # haskell-language-server
+    ## LSP
+    rust-analyzer
+    nodePackages.diagnostic-languageserver
+    nodePackages.pyright
+    nodePackages.typescript
+    nodePackages.typescript-language-server
+    nodePackages.vscode-langservers-extracted
+    sumneko-lua-language-server
     # Fonts
     jetbrains-mono
   ];
@@ -256,6 +242,7 @@
       packages.nvim-snippy
       packages.cmp-nvim-lsp
       packages.cmp-snippy
+      SchemaStore-nvim
       {
         plugin = editorconfig-vim;
         config = ''let g:EditorConfig_exclude_patterns = ["fugitive://.\*"]'';
@@ -277,6 +264,7 @@
           EOF
           '';
       }
+      rust-tools-nvim
       # {
       #   plugin = coc-nvim;
       #   config = ''

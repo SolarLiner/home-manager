@@ -54,67 +54,67 @@
   let username = "solarliner"; in
   with inputs.flake-utils.lib; eachDefaultSystem (system:
   let
-  pkgs = import inputs.nixpkgs { inherit system; };
+    pkgs = import inputs.nixpkgs { inherit system; };
   in
   {
-  packages = {
-  deno = pkgs.stdenvNoCC.mkDerivation {
-  pname = "deno";
-  version = "1.16.4";
-  src = inputs.deno;
-  phases = [ "installPhase" ];
-  dontUnpack = true;
-  installPhase = ''
-  mkdir -p $out/bin
-  cp $src $out/bin
-  '';
-  };
-  coc-omnisharp = pkgs.vimUtils.buildVimPluginFrom2Nix {
-  pname = "coc-omnisharp";
-  version = "master";
-  src = inputs.coc-omnisharp;
-  };
-  material-vim = pkgs.vimUtils.buildVimPluginFrom2Nix {
-  pname = "material.vim";
-  version = "master";
-  src = inputs.material-vim;
-  };
-  nvim-snippy = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "nix-snippy";
-    version = "master";
-    src = inputs.nvim-snippy;
-  };
-  cmp-snippy = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "cmp-snippy";
-    version = "master";
-    src = inputs.cmp-snippy;
-  };
-  cmp-nvim-lsp = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "cmp-nvim-lsp";
-    version = "master";
-    src = inputs.cmp-nvim-lsp;
-  };
-  nvim-lsp-installer = pkgs.vimUtils.buildVimPluginFrom2Nix {
-  pname = "nvim-lsp-installer";
-  version = "master";
-  src = inputs.nvim-lsp-installer;
-  };
-  vim-autosave = pkgs.vimUtils.buildVimPluginFrom2Nix {
-  pname = "vim-autosave";
-  version = "master";
-  src = inputs.vim-autosave;
-  };
-  zsh-256color = rec {
-  name = "zsh-256color";
-  file = "${name}.plugin.zsh";
-  src = inputs.zsh-256color;
-  };
-  };
-  packages.homeConfigurations."${username}" = inputs.home-manager.lib.homeManagerConfiguration {
-  inherit system username;
-  homeDirectory = "/home/${username}";
-  configuration.imports = [ ./home.nix ];
-  extraSpecialArgs = { inherit inputs; packages = inputs.self.packages."${system}"; };
-  };
+    packages = {
+      deno = pkgs.stdenvNoCC.mkDerivation {
+        pname = "deno";
+        version = "1.16.4";
+        src = inputs.deno;
+        phases = [ "installPhase" ];
+        dontUnpack = true;
+        installPhase = ''
+          mkdir -p $out/bin
+          cp $src $out/bin
+        '';
+      };
+      coc-omnisharp = pkgs.vimUtils.buildVimPluginFrom2Nix {
+        pname = "coc-omnisharp";
+        version = "master";
+        src = inputs.coc-omnisharp;
+      };
+      material-vim = pkgs.vimUtils.buildVimPluginFrom2Nix {
+        pname = "material.vim";
+        version = "master";
+        src = inputs.material-vim;
+      };
+      nvim-snippy = pkgs.vimUtils.buildVimPluginFrom2Nix {
+        pname = "nix-snippy";
+        version = "master";
+        src = inputs.nvim-snippy;
+      };
+      cmp-snippy = pkgs.vimUtils.buildVimPluginFrom2Nix {
+        pname = "cmp-snippy";
+        version = "master";
+        src = inputs.cmp-snippy;
+      };
+      cmp-nvim-lsp = pkgs.vimUtils.buildVimPluginFrom2Nix {
+        pname = "cmp-nvim-lsp";
+        version = "master";
+        src = inputs.cmp-nvim-lsp;
+      };
+      nvim-lsp-installer = pkgs.vimUtils.buildVimPluginFrom2Nix {
+        pname = "nvim-lsp-installer";
+        version = "master";
+        src = inputs.nvim-lsp-installer;
+      };
+      vim-autosave = pkgs.vimUtils.buildVimPluginFrom2Nix {
+        pname = "vim-autosave";
+        version = "master";
+        src = inputs.vim-autosave;
+      };
+      zsh-256color = rec {
+        name = "zsh-256color";
+        file = "${name}.plugin.zsh";
+        src = inputs.zsh-256color;
+      };
+    };
+    packages.homeConfigurations."${username}" = inputs.home-manager.lib.homeManagerConfiguration {
+      inherit system username;
+      homeDirectory = "/home/${username}";
+      configuration.imports = [ ./home.nix ];
+      extraSpecialArgs = { inherit inputs; packages = inputs.self.packages."${system}"; };
+    };
   });
-  }
+}
