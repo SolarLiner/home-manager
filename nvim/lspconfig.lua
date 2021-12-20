@@ -1,8 +1,11 @@
 local nvim_lsp = require('lspconfig')
 
+local util = require "lspconfig".util
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
+  print("Attached to buffer", bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -49,7 +52,7 @@ local capabilities = require('cmp_nvim_lsp')
   .update_capabilities(vim.lsp.protocol.make_client_capabilities())
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'tsserver', 'pyright' }
+local servers = { 'tsserver', 'pyright', 'sumneko_lua' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     capabilities = capabilities,
@@ -60,19 +63,14 @@ for _, lsp in ipairs(servers) do
   }
 end
 
-require"lspconfig".sumneko_lua.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-
-local util = require "lspconfig".util
-
 require'lspconfig'.diagnosticls.setup{
   filetypes = {"javascript", "typescript"},
   root_dir = function(fname)
     return util.root_pattern("tsconfig.json")(fname) or
     util.root_pattern(".eslintrc.js")(fname);
   end,
+  on_attach = on_attach,
+  capabilities = capabilities,
   init_options = {
     linters = {
       eslint = {
@@ -102,14 +100,31 @@ require'lspconfig'.diagnosticls.setup{
         }
       },
     },
+    formatters = {
+      eslint = {
+        command = "./node_modules/.bin/eslint",
+        args = { "--fix", "--stdin", "--stdin-filename", "%filepath" },
+        isStdout = false,
+        isStderr = false,
+        doesWriteToFile = true,
+        ignore = { ".git", "dist/" },
+      }
+    },
     filetypes = {
       javascript = "eslint",
       typescript = "eslint"
-    }
+    },
+    formatFiletypes = {
+      javascript = "eslint",
+      typescript = "eslint"
+    },
   }
 }
 
 require('lspconfig').jsonls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = { 'json', 'jsonc' },
   settings = {
     json = {
       schemas = require('schemastore').json.schemas(),
@@ -117,4 +132,10 @@ require('lspconfig').jsonls.setup {
   },
 }
 
-require"rust-tools".setup {}
+require"rust-tools".setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  flags = {
+    debounce_text_changes = 150,
+  }
+}

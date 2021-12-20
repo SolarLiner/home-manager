@@ -77,7 +77,9 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1639506187,
@@ -110,20 +112,6 @@
       }
     },
     "nixpkgs": {
-      "locked": {
-        "lastModified": 1639895371,
-        "narHash": "sha256-eAUPDd7YODbYbQ+sya3vS3TH9SavHV/2o46FZCqRRsE=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "3e4c1337b93152e42f53c8fcd2e0d9077c6523b1",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_2": {
       "locked": {
         "lastModified": 1639566195,
         "narHash": "sha256-ZnTBGSV6bTwopdDibmsBaAkedmTZC/rOgwQzOGcOD+s=",
@@ -178,7 +166,7 @@
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "material-vim": "material-vim",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs",
         "nvim-lsp-installer": "nvim-lsp-installer",
         "nvim-snippy": "nvim-snippy",
         "vim-autosave": "vim-autosave",

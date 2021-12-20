@@ -238,6 +238,7 @@
       nerdtree-git-plugin
       vim-devicons
       popup-nvim
+      jsonc-vim
       markdown-preview-nvim
       packages.nvim-snippy
       packages.cmp-nvim-lsp

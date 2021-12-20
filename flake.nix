@@ -6,13 +6,9 @@
       id = "nixpkgs";
     };
     flake-utils.url = github:numtide/flake-utils;
-    flake-utils.inputs = {
-      inherit nixpkgs;
-    };
+    flake-utils.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = github:nix-community/home-manager;
-    home-manager.inputs = {
-      inherit nixpkgs;
-    };
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
     vim-autosave = {
       url = github:907th/vim-auto-save;
       flake = false;
