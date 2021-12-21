@@ -5,6 +5,7 @@
     tree
     jq
     cachix
+    ripgrep
     htop
     neofetch
     pv
@@ -134,6 +135,9 @@
   };
   programs.neovim = {
     enable = true;
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
     withNodeJs = true;
     withPython3 = true;
     extraConfig = ''
@@ -158,9 +162,6 @@
       set sidescrolloff=8
 
       set updatetime=300
-
-      let mapleader = ','
-      let maplocalleader = ','
 
       set exrc
       set secure
@@ -197,6 +198,9 @@
       {
         plugin = packages.vim-autosave;
         config = ''
+          " Hijacking plugin configuration to allow using modified leader in plugins' configurations
+          let mapleader = ','
+          let maplocalleader = ','
           let g:auto_save = 1  " enable AutoSave on Vim startup
           '';
       }
@@ -219,6 +223,26 @@
         '';
       }
       ctrlp
+      {
+        plugin = telescope-nvim;
+        config = ''
+          " Find files using Telescope command-line sugar.
+          nnoremap <leader>ff <cmd>Telescope find_files<cr>
+          nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+          nnoremap <leader>fb <cmd>Telescope buffers<cr>
+          nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+          nnoremap <leader>fr <cmd>Telescope lsp_references<cr>
+          nnoremap <leader>fw <cmd>Telescope lsp_workspace_symbols<cr>
+          '';
+      }
+      {
+        plugin = telescope-lsp-handlers-nvim;
+        config = ''
+          lua << EOF
+          require"telescope".load_extension "lsp_handlers"
+          EOF
+          '';
+      }
       vim-toml
       vim-nix
       vim-sensible
@@ -239,6 +263,7 @@
       vim-devicons
       popup-nvim
       jsonc-vim
+      crates-nvim
       markdown-preview-nvim
       packages.nvim-snippy
       packages.cmp-nvim-lsp
