@@ -192,6 +192,10 @@
 
       " Open files highlithed under cursor
       map gf :edit <cfile><cr>
+
+      " Toggle NERDTree
+      nnoremap <C-n> NERDTreeToggle
+      nnoremap <C-f> NERDTreeFind
     '';
 
     plugins = with pkgs.vimPlugins; [
