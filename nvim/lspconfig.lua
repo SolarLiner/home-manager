@@ -75,7 +75,7 @@ require'lspconfig'.diagnosticls.setup{
   init_options = {
     linters = {
       eslint = {
-        command = "./node_modules/.bin/eslint",
+        command = "eslint_d",
         rootPatterns = {".eslintrc.js", ".git"},
         debounce = 100,
         args = {
@@ -103,12 +103,10 @@ require'lspconfig'.diagnosticls.setup{
     },
     formatters = {
       eslint = {
-        command = "./node_modules/.bin/eslint",
-        args = { "--fix", "--stdin", "--stdin-filename", "%filepath" },
-        isStdout = false,
-        isStderr = false,
-        doesWriteToFile = true,
-        ignore = { ".git", "dist/" },
+        command = "eslint_d",
+        args = { "--fix", "--stdin", "--stdin-filename", "%filepath", "--fix-to-stdout" },
+        isStdout = true,
+        ignore = { ".git",  "node_modules", "dist/" },
       }
     },
     filetypes = {
