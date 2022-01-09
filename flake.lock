@@ -157,6 +157,22 @@
         "type": "github"
       }
     },
+    "nvim-wgsl": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1636425392,
+        "narHash": "sha256-NsxZKeahGXp9RHtbG9Qp0/NW4qetG9T3EX5MGLNNQAM=",
+        "owner": "DingDean",
+        "repo": "wgsl.vim",
+        "rev": "9a99ae1dac8a8b694c47dccbfce2f08099dcf29c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "DingDean",
+        "repo": "wgsl.vim",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "cmp-nvim-lsp": "cmp-nvim-lsp",
@@ -169,6 +185,7 @@
         "nixpkgs": "nixpkgs",
         "nvim-lsp-installer": "nvim-lsp-installer",
         "nvim-snippy": "nvim-snippy",
+        "nvim-wgsl": "nvim-wgsl",
         "vim-autosave": "vim-autosave",
         "zsh-256color": "zsh-256color"
       }

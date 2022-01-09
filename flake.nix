@@ -25,6 +25,10 @@
       url = github:dcampos/nvim-snippy;
       flake = false;
     };
+    nvim-wgsl = {
+      url = github:DingDean/wgsl.vim;
+      flake = false;
+    };
     cmp-nvim-lsp = {
       url = github:hrsh7th/cmp-nvim-lsp;
       flake = false;
@@ -79,6 +83,11 @@
         pname = "nix-snippy";
         version = "master";
         src = inputs.nvim-snippy;
+      };
+      nvim-wgsl = pkgs.vimUtils.buildVimPluginFrom2Nix {
+        pname = "nvim-wgsl";
+        version = "master";
+        src = inputs.nvim-wgsl;
       };
       cmp-snippy = pkgs.vimUtils.buildVimPluginFrom2Nix {
         pname = "cmp-snippy";

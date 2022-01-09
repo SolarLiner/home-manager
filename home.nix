@@ -317,6 +317,7 @@
           '';
       }
       rust-tools-nvim
+      packages.nvim-wgsl
       # {
       #   plugin = coc-nvim;
       #   config = ''
