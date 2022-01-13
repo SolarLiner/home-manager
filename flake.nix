@@ -58,7 +58,7 @@
   in
   {
     packages = {
-      deno = pkgs.stdenvNoCC.mkDerivation {
+      deno = pkgs.stdenvNoCC.mkDerivation rec {
         pname = "deno";
         version = "1.16.4";
         src = inputs.deno;
@@ -66,7 +66,7 @@
         dontUnpack = true;
         installPhase = ''
           mkdir -p $out/bin
-          cp $src $out/bin
+          cp $src $out/bin/${pname}
         '';
       };
       coc-omnisharp = pkgs.vimUtils.buildVimPluginFrom2Nix {
