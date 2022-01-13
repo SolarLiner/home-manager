@@ -41,8 +41,8 @@
       url = github:coc-extensions/coc-omnisharp;
       flake = false;
     };
-    deno = {
-      url = https://github.com/denoland/deno/releases/download/v1.16.4/deno-x86_64-unknown-linux-gnu.zip;
+    deno = rec {
+      url = "https://github.com/denoland/deno/releases/download/v1.17.0/deno-x86_64-unknown-linux-gnu.zip";
       flake = false;
     };
     zsh-256color = {
@@ -60,7 +60,7 @@
     packages = {
       deno = pkgs.stdenvNoCC.mkDerivation rec {
         pname = "deno";
-        version = "1.16.4";
+        version = "1.17.0";
         src = inputs.deno;
         phases = [ "installPhase" ];
         dontUnpack = true;
