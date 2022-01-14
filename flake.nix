@@ -41,10 +41,8 @@
       url = github:coc-extensions/coc-omnisharp;
       flake = false;
     };
-    deno = rec {
-      url = "https://github.com/denoland/deno/releases/download/v1.17.0/deno-x86_64-unknown-linux-gnu.zip";
-      flake = false;
-    };
+    deno.url = path:./packages/deno;
+    deno.inputs.nixpkgs.follows = "nixpkgs";
     zsh-256color = {
       url = github:chrissicool/zsh-256color;
       flake = false;
@@ -58,17 +56,7 @@
   in
   {
     packages = {
-      deno = pkgs.stdenvNoCC.mkDerivation rec {
-        pname = "deno";
-        version = "1.17.0";
-        src = inputs.deno;
-        phases = [ "installPhase" ];
-        dontUnpack = true;
-        installPhase = ''
-          mkdir -p $out/bin
-          cp $src $out/bin/${pname}
-        '';
-      };
+      inherit (inputs.deno.packages.${system}) deno;
       coc-omnisharp = pkgs.vimUtils.buildVimPluginFrom2Nix {
         pname = "coc-omnisharp";
         version = "master";
