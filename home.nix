@@ -14,12 +14,13 @@
     nixfmt
     packages.deno
     docker-compose
-    rnix-lsp
     pulumi-bin
-    nodePackages.eslint nodePackages.eslint_d
     ## LSP
     rust-analyzer
+    omnisharp-roslyn
+    rnix-lsp
     nodePackages.diagnostic-languageserver
+    nodePackages.eslint nodePackages.eslint_d
     nodePackages.pyright
     nodePackages.typescript
     nodePackages.typescript-language-server

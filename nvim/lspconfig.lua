@@ -131,6 +131,12 @@ require('lspconfig').jsonls.setup {
   },
 }
 
+require('lspconfig').omnisharp.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  cmd = { 'omnisharp', '--languageserver', '--hostPID', tostring(vim.fn.getpid()) }
+}
+
 require"rust-tools".setup {
   server = {
     on_attach = on_attach,
