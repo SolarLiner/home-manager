@@ -110,6 +110,11 @@
         eval "$(pyenv init --path)"
         eval "$(pyenv virtualenv-init -)"
       fi
+
+      # Dotnet
+      if [[ -e $HOME/.dotnet ]]; then
+        export PATH=$HOME/.dotnet/tools:$PATH
+      fi
     '';
     oh-my-zsh = {
       enable = true;
