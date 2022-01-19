@@ -416,7 +416,8 @@
   };
 
   home.file.".ideavimrc".text = ''
-    set clipboard=ideaput
+    set clipboard=unnamedplus
+    set clipboard+=ideaput
     set command
     set easymotion
     set highlightedyank
