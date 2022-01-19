@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     # Utilities
+    diesel-cli
     tree
     jq
     cachix
