@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     # Utilities
     diesel-cli
+    docker-compose
     tree
     jq
     cachix
