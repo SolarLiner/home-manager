@@ -22,7 +22,8 @@
     omnisharp-roslyn
     rnix-lsp
     nodePackages.diagnostic-languageserver
-    nodePackages.eslint nodePackages.eslint_d
+    nodePackages.eslint
+    nodePackages.eslint_d
     nodePackages.pyright
     nodePackages.typescript
     nodePackages.typescript-language-server
@@ -202,9 +203,20 @@
       " Open files highlithed under cursor
       map gf :edit <cfile><cr>
 
-      " Toggle NERDTree
-      nnoremap <C-n> NERDTreeToggle
-      nnoremap <C-f> NERDTreeFind
+      lua << EOD
+      -- statusline
+      -- %<                                             trim from here
+      -- %{fugitive#head()}                             name of the current branch (needs fugitive.vim)
+      -- %f                                             path+filename
+      -- %m                                             check modifi{ed,able}
+      -- %r                                             check readonly
+      -- %w                                             check preview window
+      -- %=                                             left/right separator
+      -- %l/%L,%c                                       rownumber/total,colnumber
+      -- %{&fileencoding?&fileencoding:&encoding}       file encoding
+      vim.opt.statusline =
+          "  %< %{fugitive#head()}  %f %m %r %w %= Ln %l, Col %c  %{&fileencoding?&fileencoding:&encoding}  "
+      EOD
     '';
 
     plugins = with pkgs.vimPlugins; [
@@ -215,26 +227,38 @@
           let mapleader = ','
           let maplocalleader = ','
           let g:auto_save = 1  " enable AutoSave on Vim startup
-          '';
+        '';
       }
+      # {
+      #   plugin = packages.material-vim;
+      #   config = ''
+      #     set background = "dark"
+      #     let g:material_theme_style = 'darker'
+      #     let g:material_theme_italics = 1
+      #     colorscheme material
+      #   '';
+      # }
       {
-        plugin = packages.material-vim;
+        plugin = packages.nvim-github-theme;
         config = ''
           set background = "dark"
-          let g:material_theme_style = 'darker'
-          let g:material_theme_italics = 1
-          colorscheme material
+          let g:github_comment_style = "italic"
+          let g:github_keyword_style = "italic"
+          let g:github_function_style = "italic"
+          let g:github_variable_style = "italic"
+          let g:github_sidebars = ["qf", "vista_kind", "terminal"]
+          colorscheme github_dark
         '';
       }
-      {
-        plugin = airline;
-        config = ''
-          let g:airline_theme = 'material'
-          let g:airline#extensions#tabline#enabled = 1
-          let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-          let g:airline_powerline_fonts = 1
-        '';
-      }
+      # {
+      #   plugin = airline;
+      #   config = ''
+      #     let g:airline_theme = 'material'
+      #     let g:airline#extensions#tabline#enabled = 1
+      #     let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+      #     let g:airline_powerline_fonts = 1
+      #   '';
+      # }
       ctrlp
       {
         plugin = telescope-nvim;
@@ -246,7 +270,7 @@
           nnoremap <leader>fh <cmd>Telescope help_tags<cr>
           nnoremap <leader>fr <cmd>Telescope lsp_references<cr>
           nnoremap <leader>fw <cmd>Telescope lsp_workspace_symbols<cr>
-          '';
+        '';
       }
       {
         plugin = telescope-lsp-handlers-nvim;
@@ -254,7 +278,7 @@
           lua << EOF
           require"telescope".load_extension "lsp_handlers"
           EOF
-          '';
+        '';
       }
       vim-toml
       vim-nix
@@ -291,7 +315,7 @@
           nnoremap <C-n> :NERDTree<CR>
           nnoremap <C-t> :NERDTreeToggle<CR>
           nnoremap <C-f> :NERDTreeFind<CR>
-          '';
+        '';
       }
       nerdtree-git-plugin
       vim-devicons
@@ -307,14 +331,14 @@
         plugin = editorconfig-vim;
         config = ''let g:EditorConfig_exclude_patterns = ["fugitive://.\*"]'';
       }
-      { 
+      {
         plugin = nvim-cmp;
         config = ''
           set completeopt=menu,menuone,noselect
           lua << EOF
           ${builtins.readFile ./nvim/cmp.lua}
           EOF
-          '';
+        '';
       }
       {
         plugin = nvim-lspconfig;
@@ -322,7 +346,7 @@
           lua << EOF
           ${builtins.readFile ./nvim/lspconfig.lua}
           EOF
-          '';
+        '';
       }
       rust-tools-nvim
       packages.nvim-wgsl
@@ -426,21 +450,26 @@
     set surround
   '';
   xdg.configFile."kitty/kitty.conf".text =
-    let theme = builtins.fetchurl {
-      url = "https://raw.githubusercontent.com/kdrag0n/base16-kitty/master/colors/base16-material-darker.conf";
-      sha256 = "sha256:01rmlpgclvhimr92f0v95301dz73iakgr61zcifcia6054yj12fd";
-    }; in ''
-    font_family JetBrains Mono
-    font_size 10
-    adjust_line_height 130%
-    disable_ligatures cursor
-    enable_audio_bell no
-    visual_bell_duration 0.1
-    window_margin_width 8
-    tab_bar_style powerline
+    let
+      # theme = builtins.fetchurl {
+      #   url = "https://raw.githubusercontent.com/kdrag0n/base16-kitty/master/colors/base16-material-darker.conf";
+      #   sha256 = "sha256:01rmlpgclvhimr92f0v95301dz73iakgr61zcifcia6054yj12fd";
+      # };
+      theme = "${packages.nvim-github-theme}/terminal/kitty/github_dark.conf";
+    in
+    ''
+      background_opacity 0.9
+      font_family JetBrains Mono
+      font_size 10
+      adjust_line_height 130%
+      disable_ligatures cursor
+      enable_audio_bell no
+      visual_bell_duration 0.1
+      window_margin_width 8
+      tab_bar_style powerline
 
-    include ${theme}
-  '';
+      include ${theme}
+    '';
   xdg.configFile."nvim/coc-settings.json".text = builtins.toJSON {
     languageserver = {
       haskell = {
@@ -466,7 +495,7 @@
       zig = {
         command = "zls";
         filetypes = [ "zig" ];
-        rootPatterns = [ "builg.zig" ];
+        rootPatterns = [ "build.zig" ];
       };
     };
     "eslint.format.enable" = true;

@@ -13,8 +13,12 @@
       url = github:907th/vim-auto-save;
       flake = false;
     };
-    material-vim = {
-      url = github:kaicataldo/material.vim;
+    # material-vim = {
+    #   url = github:kaicataldo/material.vim;
+    #   flake = false;
+    # };
+    nvim-github-theme = {
+      url = github:projekt0n/github-nvim-theme;
       flake = false;
     };
     nvim-lsp-installer = {
@@ -62,10 +66,15 @@
         version = "master";
         src = inputs.coc-omnisharp;
       };
-      material-vim = pkgs.vimUtils.buildVimPluginFrom2Nix {
-        pname = "material.vim";
+      # material-vim = pkgs.vimUtils.buildVimPluginFrom2Nix {
+      #   pname = "material.vim";
+      #   version = "master";
+      #   src = inputs.material-vim;
+      # };
+      nvim-github-theme = pkgs.vimUtils.buildVimPluginFrom2Nix {
+        pname = "github-nvim-theme";
         version = "master";
-        src = inputs.material-vim;
+        src = inputs.nvim-github-theme;
       };
       nvim-snippy = pkgs.vimUtils.buildVimPluginFrom2Nix {
         pname = "nix-snippy";

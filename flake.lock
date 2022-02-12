@@ -115,22 +115,6 @@
         "type": "github"
       }
     },
-    "material-vim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1639160130,
-        "narHash": "sha256-0QwN8tbCv27qxlGYVXnwhOJ9FA3KRDPrr6oFqaDJlNM=",
-        "owner": "kaicataldo",
-        "repo": "material.vim",
-        "rev": "445534b2db7f7ec3dc088eae21c86ff0e9bb19de",
-        "type": "github"
-      },
-      "original": {
-        "owner": "kaicataldo",
-        "repo": "material.vim",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1639566195,
@@ -143,6 +127,22 @@
       "original": {
         "id": "nixpkgs",
         "type": "indirect"
+      }
+    },
+    "nvim-github-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1642931254,
+        "narHash": "sha256-3Rp0oL+yhojQ6bIejS4IlPzyrxut7LcuobykonrpAEc=",
+        "owner": "projekt0n",
+        "repo": "github-nvim-theme",
+        "rev": "1700dfe790985ce859868e16e13dcda0ec80cb3f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "projekt0n",
+        "repo": "github-nvim-theme",
+        "type": "github"
       }
     },
     "nvim-lsp-installer": {
@@ -201,8 +201,8 @@
         "deno": "deno",
         "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
-        "material-vim": "material-vim",
         "nixpkgs": "nixpkgs",
+        "nvim-github-theme": "nvim-github-theme",
         "nvim-lsp-installer": "nvim-lsp-installer",
         "nvim-snippy": "nvim-snippy",
         "nvim-wgsl": "nvim-wgsl",
