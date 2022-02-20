@@ -194,11 +194,11 @@
       " Custom Vim keybinds
       vnoremap < <gv
       vnoremap > >gv
-      nnoremap <S-Tab> <<
-      vnoremap <S-Tab> <gv
-      inoremap <S-Tab> <C-d>
-      nnoremap <Tab> >>
-      vnoremap <Tab> >gv
+      " nnoremap <S-Tab> <<
+      " vnoremap <S-Tab> <gv
+      " inoremap <S-Tab> <C-d>
+      " nnoremap <Tab> >>
+      " vnoremap <Tab> >gv
 
       " Open files highlithed under cursor
       map gf :edit <cfile><cr>
@@ -323,7 +323,14 @@
       jsonc-vim
       crates-nvim
       markdown-preview-nvim
-      packages.nvim-snippy
+      {
+        plugin = packages.nvim-snippy;
+        config = ''
+          lua << EOF
+          ${builtins.readFile ./nvim/snippy.lua}
+          EOF
+          '';
+      }
       packages.cmp-nvim-lsp
       packages.cmp-snippy
       SchemaStore-nvim
@@ -458,7 +465,6 @@
       theme = "${packages.nvim-github-theme}/terminal/kitty/github_dark.conf";
     in
     ''
-      background_opacity 0.9
       font_family JetBrains Mono
       font_size 10
       adjust_line_height 130%

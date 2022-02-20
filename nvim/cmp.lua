@@ -22,13 +22,13 @@ cmp.setup({
             ['<TAB>'] = cmp.mapping.confirm({ select = true }),
         },
         sources = cmp.config.sources({
-                { name = 'nvim_lsp' },
-                { name = 'snippy' },
-            }, {
                 { name = 'path' },
                 { name = 'buffer' },
                 { name = 'crates' },
-            })
+                { name = 'nvim_lsp' },
+                { name = 'snippy' },
+            }),
+        experimental = { ghost_text = false }
     })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
