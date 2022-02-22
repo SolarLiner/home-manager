@@ -4,6 +4,7 @@
     # Utilities
     diesel-cli
     docker-compose
+    google-cloud-sdk
     tree
     jq
     cachix
