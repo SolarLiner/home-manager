@@ -34,7 +34,7 @@
     delta.enable = true;
     lfs.enable = true;
     userName = "Nathan Graule";
-    userEmail = "solarliner@gmail.com";
+    userEmail = "nathan@geotrend.fr";
   };
   programs.gh = {
     enable = true;
