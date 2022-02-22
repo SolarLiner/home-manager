@@ -7,6 +7,7 @@
     google-cloud-sdk
     tree
     jq
+    jiq
     cachix
     ripgrep
     htop
