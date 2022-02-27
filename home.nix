@@ -14,6 +14,7 @@
     pv
     # Language tooling
     coq
+    mold
     nixfmt
     packages.deno
     docker-compose
@@ -457,6 +458,12 @@
     set highlightedyank
     set surround
   '';
+  home.file.".cargo/config".text = ''
+    [target.x86_64-unknown-linux-gnu]
+    rustflags = [
+        "-C", "link-arg=-fuse-ld=mold",
+    ]
+    '';
   xdg.configFile."kitty/kitty.conf".text =
     let
       # theme = builtins.fetchurl {
