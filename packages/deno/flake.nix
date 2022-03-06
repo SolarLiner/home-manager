@@ -28,7 +28,7 @@
         cp $src $out/bin/${pname}
       '';
     };
-    packages.deno = lib.makeDeno { version = "1.17.3"; sha256 = "00ls4jicsnkx34ybnvjlcxk0i3n84nn2qq0fzajni1jhs0dzwdma"; };
+    packages.deno = lib.makeDeno { version = "1.19.2"; sha256 = "04v48zjydmnj9gkfh5197m36fwmgrp8lk98lkvhcffx4c7lfgyxn"; };
     defaultPackage = packages.deno;
 
     apps.deno = mkApp { drv = self.packages.deno; };

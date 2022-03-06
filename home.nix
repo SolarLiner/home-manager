@@ -2,10 +2,11 @@
 {
   home.packages = with pkgs; [
     # Utilities
+    dapr-cli
     diesel-cli
     docker-compose
     tree
-    jq
+    # jq
     cachix
     ripgrep
     htop
@@ -121,7 +122,7 @@
     '';
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "sudo" "pyenv" "nvm" "cargo" "rust" "autojump" "vscode" ];
+      plugins = [ "git" "sudo" "pyenv" "nvm" "rust" "autojump" "vscode" ];
       extraConfig = ''
         BULLETTRAIN_PROMPT_ORDER=(
         git
