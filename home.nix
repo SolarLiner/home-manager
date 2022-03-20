@@ -460,8 +460,9 @@
   '';
   home.file.".cargo/config".text = ''
     [target.x86_64-unknown-linux-gnu]
+    linker="clang"
     rustflags = [
-        "-C", "link-arg=-fuse-ld=mold",
+        "-C", "link-arg=-fuse-ld=${pkgs.mold}/bin/mold",
     ]
     '';
   xdg.configFile."kitty/kitty.conf".text =
