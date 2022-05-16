@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     # Utilities
+    dapr-cli
     diesel-cli
     docker-compose
     google-cloud-sdk
@@ -15,6 +16,7 @@
     pv
     # Language tooling
     coq
+    mold
     nixfmt
     packages.deno
     docker-compose
@@ -123,7 +125,7 @@
     '';
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "sudo" "pyenv" "nvm" "cargo" "rust" "autojump" "vscode" ];
+      plugins = [ "git" "sudo" "pyenv" "nvm" "rust" "autojump" "vscode" ];
       extraConfig = ''
         BULLETTRAIN_PROMPT_ORDER=(
         git
@@ -196,11 +198,11 @@
       " Custom Vim keybinds
       vnoremap < <gv
       vnoremap > >gv
-      nnoremap <S-Tab> <<
-      vnoremap <S-Tab> <gv
-      inoremap <S-Tab> <C-d>
-      nnoremap <Tab> >>
-      vnoremap <Tab> >gv
+      " nnoremap <S-Tab> <<
+      " vnoremap <S-Tab> <gv
+      " inoremap <S-Tab> <C-d>
+      " nnoremap <Tab> >>
+      " vnoremap <Tab> >gv
 
       " Open files highlithed under cursor
       map gf :edit <cfile><cr>
@@ -325,7 +327,14 @@
       jsonc-vim
       crates-nvim
       markdown-preview-nvim
-      packages.nvim-snippy
+      {
+        plugin = packages.nvim-snippy;
+        config = ''
+          lua << EOF
+          ${builtins.readFile ./nvim/snippy.lua}
+          EOF
+          '';
+      }
       packages.cmp-nvim-lsp
       packages.cmp-snippy
       SchemaStore-nvim
@@ -451,6 +460,13 @@
     set highlightedyank
     set surround
   '';
+  home.file.".cargo/config".text = ''
+    [target.x86_64-unknown-linux-gnu]
+    linker="clang"
+    rustflags = [
+        "-C", "link-arg=-fuse-ld=${pkgs.mold}/bin/mold",
+    ]
+    '';
   xdg.configFile."kitty/kitty.conf".text =
     let
       # theme = builtins.fetchurl {
@@ -460,7 +476,6 @@
       theme = "${packages.nvim-github-theme}/terminal/kitty/github_dark.conf";
     in
     ''
-      background_opacity 0.9
       font_family JetBrains Mono
       font_size 10
       adjust_line_height 130%
