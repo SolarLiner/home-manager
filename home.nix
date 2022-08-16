@@ -43,13 +43,16 @@
   programs.bash.enable = false;
   programs.nushell = {
     enable = true;
-    settings = {
-      startup = [
-        "mkdir ~/.cache/starship"
-        "starship init nu | save ~/.cache/starship/init.nu"
-        "source ~/.cache/starship/init.nu"
-      ];
-      prompt = "starship_prompt";
+    envFile = {
+      text = ''
+        mkdir ~/.cache/starship
+        starship init nu | save ~/.cache/starship/init.nu
+      '';
+    };
+    configFile = {
+      text = ''
+        source ~/.cache/starship/init.nu
+      '';
     };
   };
   programs.exa = {
@@ -110,10 +113,12 @@
 
       # Pyenv
       export PYENV_ROOT=$HOME/.pyenv
-      if [[ -e $PYENV_ROOT ]]; then
+      if [[ ! -e $PYENV_ROOT ]]; then
+        git clone https://github.com/pyenv/pyenv.git $PYENV_ROOT
+      else
         export PATH=$PYENV_ROOT/bin:$PATH
         eval "$(pyenv init --path)"
-        eval "$(pyenv virtualenv-init -)"
+        # eval "$(pyenv virtualenv-init -)"
       fi
 
       # Dotnet
@@ -331,7 +336,7 @@
           lua << EOF
           ${builtins.readFile ./nvim/snippy.lua}
           EOF
-          '';
+        '';
       }
       packages.cmp-nvim-lsp
       packages.cmp-snippy
@@ -464,7 +469,7 @@
     rustflags = [
         "-C", "link-arg=-fuse-ld=${pkgs.mold}/bin/mold",
     ]
-    '';
+  '';
   xdg.configFile."kitty/kitty.conf".text =
     let
       # theme = builtins.fetchurl {

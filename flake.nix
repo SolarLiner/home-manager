@@ -115,10 +115,16 @@
           };
         };
         packages.homeConfigurations."${username}" = inputs.home-manager.lib.homeManagerConfiguration {
-          inherit system username pkgs;
-          homeDirectory = "/home/${username}";
-          configuration.imports = [ ./home.nix ];
+          inherit pkgs;
           extraSpecialArgs = { inherit inputs; packages = inputs.self.packages."${system}"; };
+          modules = [
+            ./home.nix
+            { home = {
+              inherit username;
+              homeDirectory = "/home/${username}";
+              stateVersion = "22.05";
+            }; }
+          ];
         };
       });
 }
