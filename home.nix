@@ -106,13 +106,13 @@
       source $NVM_DIR/bash_completion
 
       # Rustup
-      export CARGO_HOME=$HOME/.cargo
+      export CARGO_HOME=$HOME/.local/share/cargo
       if [[ -e $CARGO_HOME ]]; then
         export PATH=$CARGO_HOME/bin:$PATH
       fi
 
       # Pyenv
-      export PYENV_ROOT=$HOME/.pyenv
+      export PYENV_ROOT=$HOME/.local/share/pyenv
       if [[ ! -e $PYENV_ROOT ]]; then
         git clone https://github.com/pyenv/pyenv.git $PYENV_ROOT
       else
@@ -122,9 +122,9 @@
       fi
 
       # Dotnet
-      if [[ -e $HOME/.dotnet ]]; then
-        export PATH=$HOME/.dotnet/tools:$PATH
-      fi
+      # if [[ -e $HOME/.dotnet ]]; then
+      #   export PATH=$HOME/.dotnet/tools:$PATH
+      # fi
     '';
     oh-my-zsh = {
       enable = true;
