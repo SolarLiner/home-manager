@@ -157,7 +157,7 @@
     vimdiffAlias = true;
     withNodeJs = true;
     withPython3 = true;
-    extraConfig = ''
+    /*     extraConfig = ''
       set nocompatible
       set nobackup
       set hidden
@@ -193,9 +193,9 @@
       endif
 
       if has('nvim-0.5.0') || has('patch-8.1.1564')
-        set signcolumn=number
+      set signcolumn=number
       else
-        set signcolumn=yes
+      set signcolumn=yes
       endif
 
       " Custom Vim keybinds
@@ -222,19 +222,19 @@
       -- %l/%L,%c                                       rownumber/total,colnumber
       -- %{&fileencoding?&fileencoding:&encoding}       file encoding
       vim.opt.statusline =
-          "  %< %{fugitive#head()}  %f %m %r %w %= Ln %l, Col %c  %{&fileencoding?&fileencoding:&encoding}  "
+      "  %< %{fugitive#head()}  %f %m %r %w %= Ln %l, Col %c  %{&fileencoding?&fileencoding:&encoding}  "
       EOD
-    '';
+      ''; */
 
-    plugins = with pkgs.vimPlugins; [
+    /*     plugins = with pkgs.vimPlugins; [
       {
-        plugin = packages.vim-autosave;
-        config = ''
-          " Hijacking plugin configuration to allow using modified leader in plugins' configurations
-          let mapleader = ','
-          let maplocalleader = ','
-          let g:auto_save = 1  " enable AutoSave on Vim startup
-        '';
+      plugin = packages.vim-autosave;
+      config = ''
+      " Hijacking plugin configuration to allow using modified leader in plugins' configurations
+      let mapleader = ','
+      let maplocalleader = ','
+      let g:auto_save = 1  " enable AutoSave on Vim startup
+      '';
       }
       # {
       #   plugin = packages.material-vim;
@@ -246,16 +246,16 @@
       #   '';
       # }
       {
-        plugin = packages.nvim-github-theme;
-        config = ''
-          set background = "dark"
-          let g:github_comment_style = "italic"
-          let g:github_keyword_style = "italic"
-          let g:github_function_style = "italic"
-          let g:github_variable_style = "italic"
-          let g:github_sidebars = ["qf", "vista_kind", "terminal"]
-          colorscheme github_dark
-        '';
+      plugin = packages.nvim-github-theme;
+      config = ''
+      set background = "dark"
+      let g:github_comment_style = "italic"
+      let g:github_keyword_style = "italic"
+      let g:github_function_style = "italic"
+      let g:github_variable_style = "italic"
+      let g:github_sidebars = ["qf", "vista_kind", "terminal"]
+      colorscheme github_dark
+      '';
       }
       # {
       #   plugin = airline;
@@ -268,24 +268,24 @@
       # }
       ctrlp
       {
-        plugin = telescope-nvim;
-        config = ''
-          " Find files using Telescope command-line sugar.
-          nnoremap <leader>ff <cmd>Telescope find_files<cr>
-          nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-          nnoremap <leader>fb <cmd>Telescope buffers<cr>
-          nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-          nnoremap <leader>fr <cmd>Telescope lsp_references<cr>
-          nnoremap <leader>fw <cmd>Telescope lsp_workspace_symbols<cr>
-        '';
+      plugin = telescope-nvim;
+      config = ''
+      " Find files using Telescope command-line sugar.
+      nnoremap <leader>ff <cmd>Telescope find_files<cr>
+      nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+      nnoremap <leader>fb <cmd>Telescope buffers<cr>
+      nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+      nnoremap <leader>fr <cmd>Telescope lsp_references<cr>
+      nnoremap <leader>fw <cmd>Telescope lsp_workspace_symbols<cr>
+      '';
       }
       {
-        plugin = telescope-lsp-handlers-nvim;
-        config = ''
-          lua << EOF
-          require"telescope".load_extension "lsp_handlers"
-          EOF
-        '';
+      plugin = telescope-lsp-handlers-nvim;
+      config = ''
+      lua << EOF
+      require"telescope".load_extension "lsp_handlers"
+      EOF
+      '';
       }
       vim-toml
       vim-nix
@@ -303,26 +303,26 @@
       auto-pairs
       zig-vim
       {
-        plugin = nerdtree;
-        config = ''
-          nnoremap <leader>n :NERDTreeFocus<CR>
-          nnoremap <C-n> :NERDTree<CR>
-          nnoremap <C-t> :NERDTreeToggle<CR>
-          nnoremap <C-f> :NERDTreeFind<CR>
+      plugin = nerdtree;
+      config = ''
+      nnoremap <leader>n :NERDTreeFocus<CR>
+      nnoremap <C-n> :NERDTree<CR>
+      nnoremap <C-t> :NERDTreeToggle<CR>
+      nnoremap <C-f> :NERDTreeFind<CR>
 
-          " Start NERDTree. If a file is specified, move the cursor to its window.
-          autocmd StdinReadPre * let s:std_in=1
-          autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+      " Start NERDTree. If a file is specified, move the cursor to its window.
+      autocmd StdinReadPre * let s:std_in=1
+      autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
 
-          " If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
-          autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
-              \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+      " If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+      autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+      \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
-          nnoremap <leader>n :NERDTreeFocus<CR>
-          nnoremap <C-n> :NERDTree<CR>
-          nnoremap <C-t> :NERDTreeToggle<CR>
-          nnoremap <C-f> :NERDTreeFind<CR>
-        '';
+      nnoremap <leader>n :NERDTreeFocus<CR>
+      nnoremap <C-n> :NERDTree<CR>
+      nnoremap <C-t> :NERDTreeToggle<CR>
+      nnoremap <C-f> :NERDTreeFind<CR>
+      '';
       }
       nerdtree-git-plugin
       vim-devicons
@@ -331,36 +331,36 @@
       crates-nvim
       markdown-preview-nvim
       {
-        plugin = packages.nvim-snippy;
-        config = ''
-          lua << EOF
-          ${builtins.readFile ./nvim/snippy.lua}
-          EOF
-        '';
+      plugin = packages.nvim-snippy;
+      config = ''
+      lua << EOF
+      ${builtins.readFile ./nvim/snippy.lua}
+      EOF
+      '';
       }
       packages.cmp-nvim-lsp
       packages.cmp-snippy
       SchemaStore-nvim
       {
-        plugin = editorconfig-vim;
-        config = ''let g:EditorConfig_exclude_patterns = ["fugitive://.\*"]'';
+      plugin = editorconfig-vim;
+      config = ''let g:EditorConfig_exclude_patterns = ["fugitive://.\*"]'';
       }
       {
-        plugin = nvim-cmp;
-        config = ''
-          set completeopt=menu,menuone,noselect
-          lua << EOF
-          ${builtins.readFile ./nvim/cmp.lua}
-          EOF
-        '';
+      plugin = nvim-cmp;
+      config = ''
+      set completeopt=menu,menuone,noselect
+      lua << EOF
+      ${builtins.readFile ./nvim/cmp.lua}
+      EOF
+      '';
       }
       {
-        plugin = nvim-lspconfig;
-        config = ''
-          lua << EOF
-          ${builtins.readFile ./nvim/lspconfig.lua}
-          EOF
-        '';
+      plugin = nvim-lspconfig;
+      config = ''
+      lua << EOF
+      ${builtins.readFile ./nvim/lspconfig.lua}
+      EOF
+      '';
       }
       rust-tools-nvim
       packages.nvim-wgsl
@@ -449,7 +449,7 @@
       #   #   \| hi def CoqtailSent ctermbg=7
       #   # augroup END'';
       # }
-    ];
+      ]; */
 
     extraPackages = with pkgs; [ fzf ];
     extraPython3Packages = ps: with ps; [ /* python-language-server */ ];
@@ -463,20 +463,21 @@
     set highlightedyank
     set surround
   '';
-  home.file.".cargo/config".text = ''
+  xdg.configFile."cargo/config".text = ''
     [target.x86_64-unknown-linux-gnu]
     linker="clang"
     rustflags = [
         "-C", "link-arg=-fuse-ld=${pkgs.mold}/bin/mold",
     ]
   '';
+  xdg.configFile."nvim/init.lua".source = ./nvim/init.lua;
   xdg.configFile."kitty/kitty.conf".text =
     let
-      # theme = builtins.fetchurl {
-      #   url = "https://raw.githubusercontent.com/kdrag0n/base16-kitty/master/colors/base16-material-darker.conf";
-      #   sha256 = "sha256:01rmlpgclvhimr92f0v95301dz73iakgr61zcifcia6054yj12fd";
-      # };
-      theme = "${packages.nvim-github-theme}/terminal/kitty/github_dark.conf";
+      theme = builtins.fetchurl {
+        url = "https://raw.githubusercontent.com/kdrag0n/base16-kitty/master/colors/base16-material-darker.conf";
+        sha256 = "sha256:01rmlpgclvhimr92f0v95301dz73iakgr61zcifcia6054yj12fd";
+      };
+      # theme = "${packages.nvim-github-theme}/terminal/kitty/github_dark.conf";
     in
     ''
       font_family JetBrains Mono
@@ -490,47 +491,4 @@
 
       include ${theme}
     '';
-  xdg.configFile."nvim/coc-settings.json".text = builtins.toJSON {
-    languageserver = {
-      haskell = {
-        command = "haskell-language-server-wrapper";
-        filetypes = [ "hs" "lhs" "haskell" ];
-        rootPatterns = [ "stack.yml" "cabal.config" "package.yaml" ];
-        initializationOptions = {
-          languageServerHaskell = {
-            hlintOn = true;
-          };
-        };
-      };
-      nix = {
-        command = "rnix-lsp";
-        filetypes = [ "nix" ];
-      };
-      python = {
-        command = "python-language-server";
-        filetypes = [ "py" ];
-        rootPatterns = [ "pyproject.toml" "setup.py" "setup.cfg" ];
-      };
-      ocaml = { command = "ocamllsp"; filetypes = [ "ml" "ocaml" ]; rootPatterns = [ "dune-project" "dune-workspace" ".git" ]; };
-      zig = {
-        command = "zls";
-        filetypes = [ "zig" ];
-        rootPatterns = [ "build.zig" ];
-      };
-    };
-    "eslint.format.enable" = true;
-    "rust-analyzer.server.path" = "${pkgs.rust-analyzer}/bin/rust-analyzer";
-    "rust-analyzer.procMacro.enable" = true;
-    "rust-analyzer.cargo.loadOutDirsFromCheck" = true;
-  };
-  #  // (
-  #   flatten {
-  #   rust-analyzer = {
-  #     # path = "${pkgs.rust-analyzer}/bin/rust-analyzer";
-  #     path = "rust-analyzer";
-  #     procMacro.enable = true;
-  #     cargo.loadOutDirsFromCheck = true;
-  #   };
-  #  }
-  #  );
 }

@@ -1,53 +1,5 @@
 {
   "nodes": {
-    "cmp-nvim-lsp": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1652705110,
-        "narHash": "sha256-19Ka4EQhqo//IMjJ/DnXiHsevVWFy2M90oSjmBFfCO0=",
-        "owner": "hrsh7th",
-        "repo": "cmp-nvim-lsp",
-        "rev": "affe808a5c56b71630f17aa7c38e15c59fd648a8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hrsh7th",
-        "repo": "cmp-nvim-lsp",
-        "type": "github"
-      }
-    },
-    "cmp-snippy": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1632148155,
-        "narHash": "sha256-vseoNZtB8jPGAJD8zFJigwKn11rXsNy04ipg0fYM46k=",
-        "owner": "dcampos",
-        "repo": "cmp-snippy",
-        "rev": "9af1635fe40385ffa3dabf322039cb5ae1fd7d35",
-        "type": "github"
-      },
-      "original": {
-        "owner": "dcampos",
-        "repo": "cmp-snippy",
-        "type": "github"
-      }
-    },
-    "coc-omnisharp": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1648713702,
-        "narHash": "sha256-gC1DbS07smpjJaAh9ZaeX6FETKBlIY+jd7leV5wmJW0=",
-        "owner": "coc-extensions",
-        "repo": "coc-omnisharp",
-        "rev": "d34b6937f478793fd6fc0779f1e720025d254efd",
-        "type": "github"
-      },
-      "original": {
-        "owner": "coc-extensions",
-        "repo": "coc-omnisharp",
-        "type": "github"
-      }
-    },
     "deno": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -131,84 +83,12 @@
         "type": "indirect"
       }
     },
-    "nvim-github-theme": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1658829336,
-        "narHash": "sha256-BXbuee35rV0j9Qy4ak+Iw3Pv0bLj0nbheHqoPBDfN5s=",
-        "owner": "projekt0n",
-        "repo": "github-nvim-theme",
-        "rev": "6c9b575a6bd28ddce3ca282955c77d426c20cec3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "projekt0n",
-        "repo": "github-nvim-theme",
-        "type": "github"
-      }
-    },
-    "nvim-lsp-installer": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1658842139,
-        "narHash": "sha256-kKCx215bnaf1izAXQW22JgPoOjOCdZ+ZhmkJL88f2UY=",
-        "owner": "williamboman",
-        "repo": "nvim-lsp-installer",
-        "rev": "ff51c2173d2917517c96f22d9c21940307930b57",
-        "type": "github"
-      },
-      "original": {
-        "owner": "williamboman",
-        "repo": "nvim-lsp-installer",
-        "type": "github"
-      }
-    },
-    "nvim-snippy": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1658237507,
-        "narHash": "sha256-ZXKnBZ2M/pq4T8gqIVq4bKh4t7eRcXkYpHv5JP/28nA=",
-        "owner": "dcampos",
-        "repo": "nvim-snippy",
-        "rev": "dc5474332379c31ac8c74e1e5d1c7a27f0b8177e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "dcampos",
-        "repo": "nvim-snippy",
-        "type": "github"
-      }
-    },
-    "nvim-wgsl": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1651371976,
-        "narHash": "sha256-BCuJkp8hhM2w6kMPoTGgeiryKO94EXTPBhKzcd8yDKM=",
-        "owner": "DingDean",
-        "repo": "wgsl.vim",
-        "rev": "fbe8f0dd179aec8525d6c93bb992e409b0e4e0ee",
-        "type": "github"
-      },
-      "original": {
-        "owner": "DingDean",
-        "repo": "wgsl.vim",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
-        "cmp-nvim-lsp": "cmp-nvim-lsp",
-        "cmp-snippy": "cmp-snippy",
-        "coc-omnisharp": "coc-omnisharp",
         "deno": "deno",
         "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nvim-github-theme": "nvim-github-theme",
-        "nvim-lsp-installer": "nvim-lsp-installer",
-        "nvim-snippy": "nvim-snippy",
-        "nvim-wgsl": "nvim-wgsl",
-        "vim-autosave": "vim-autosave",
         "zsh-256color": "zsh-256color"
       }
     },
@@ -224,22 +104,6 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "vim-autosave": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1658556341,
-        "narHash": "sha256-fm5DEuZ3ATQyg9JVKxsYqVC7fHUZqEXGTm0falBFoOo=",
-        "owner": "907th",
-        "repo": "vim-auto-save",
-        "rev": "038c104f67a63d4a39bef1ce5d60716fbebf1b24",
-        "type": "github"
-      },
-      "original": {
-        "owner": "907th",
-        "repo": "vim-auto-save",
         "type": "github"
       }
     },
