@@ -8,7 +8,7 @@ vim.cmd 'colorscheme material'
 
 -- Undo files
 opt.undofile = true
-opt.undodir = "~/.cache/neovim"
+opt.undodir = vim.fn.expand("~/.cache/neovim")
 
 -- Indentation
 opt.smartindent = true
