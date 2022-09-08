@@ -107,6 +107,8 @@ let nvim-web-tools = pkgs.vimUtils.buildVimPlugin {
         . $HOME/.profile
       fi
 
+      export EDITOR=nvim
+
       # NVM
       export NVM_DIR=$HOME/.local/share/nvm
       if [[ ! -e $NVM_DIR ]]; then
