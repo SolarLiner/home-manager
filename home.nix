@@ -176,6 +176,7 @@ let nvim-web-tools = pkgs.vimUtils.buildVimPlugin {
       lua << EOF
       vim.defer_fn(function()
         vim.cmd [[
+          luafile ${./nvim/cmp.lua}
           luafile ${./nvim/lspconfig.lua}
           luafile ${./nvim/bufferline.lua}
           luafile ${./nvim/lualine.lua}
@@ -213,7 +214,10 @@ let nvim-web-tools = pkgs.vimUtils.buildVimPlugin {
 
       # LSP
       nvim-lspconfig
-      nvim-compe
+      nvim-cmp
+      cmp-nvim-lsp
+      cmp-nvim-lsp-document-symbol
+      cmp-nvim-lsp-signature-help
 
       # UI
       {
