@@ -106,8 +106,12 @@
       source $NVM_DIR/bash_completion
 
       # Rustup
+      export RUSTUP_HOME=$HOME/.local/share/rustup
       export CARGO_HOME=$HOME/.local/share/cargo
-      if [[ -e $CARGO_HOME ]]; then
+      if [[ ! -e $CARGO_HOME ]]; then
+        curl https://sh.rustup.rs -sSf | sh -s -- --no-modify-path -y
+        export PATH=$CARGO_HOME/bin:$PATH
+      elif [[ -e $CARGO_HOME ]]; then
         export PATH=$CARGO_HOME/bin:$PATH
       fi
 
