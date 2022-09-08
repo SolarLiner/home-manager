@@ -1,4 +1,13 @@
 { pkgs, inputs, packages, ... }:
+let nvim-web-tools = pkgs.vimUtils.buildVimPlugin {
+  name = "web-tools";
+  src = pkgs.fetchFromGitHub {
+    repo = "web-tools.nvim";
+    owner = "ray-x";
+    rev = "a289af77e14d224ab9770f9802d090f176dd340f";
+    sha256 = "0XUGe0XaPOB9VJ6ODa0dTs2D/Ks0dfX0I3H00Vnohv0=";
+  };
+}; in
 {
   home.packages = with pkgs; [
     # Utilities
@@ -19,6 +28,7 @@
     packages.deno
     docker-compose
     pulumi-bin
+    nodePackages.browser-sync
     ## LSP
     rust-analyzer
     omnisharp-roslyn
@@ -183,16 +193,33 @@
         plugin = nvim-autopairs;
         config = "lua require'nvim-autopairs'.setup{}";
       }
+      {
+        plugin = vim-auto-save;
+        config = ''
+          let g:auto_save = 1
+          let g:auto_save_silent = 1
+          let g:auto_save_events = ["InsertLeave", "CursorHoldI"]
+        '';
+      }
+      nvim-web-tools
+
       # Colortheme
       material-nvim
       indentLine
+
       # Filetypes
       (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars))
       vim-nix
+
       # LSP
       nvim-lspconfig
       nvim-compe
+
       # UI
+      {
+        plugin = dressing-nvim;
+        config = "lua require'dressing'.setup {}";
+      }
       nvim-web-devicons
       nvim-tree-lua
       popup-nvim

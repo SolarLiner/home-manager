@@ -11,6 +11,12 @@ require'nvim-tree'.setup {
     enable = true,
     ignore = false,
   },
+    filters = {
+        custom = {
+            [[\\.git]],
+            [[node_modules]]
+        },
+    },
   renderer = {
     special_files = {
       "LICENSE",
