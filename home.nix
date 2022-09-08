@@ -451,6 +451,11 @@
       # }
       ]; */
 
+    extraConfig = ''
+      lua << END
+      ${builtins.readFile ./nvim/init.lua}
+      END
+      '';
     extraPackages = with pkgs; [ fzf ];
     extraPython3Packages = ps: with ps; [ /* python-language-server */ ];
   };
@@ -470,7 +475,7 @@
         "-C", "link-arg=-fuse-ld=${pkgs.mold}/bin/mold",
     ]
   '';
-  xdg.configFile."nvim/init.lua".source = ./nvim/init.lua;
+  # xdg.configFile."nvim/init.lua".source = ./nvim/init.lua;
   xdg.configFile."kitty/kitty.conf".text =
     let
       theme = builtins.fetchurl {
