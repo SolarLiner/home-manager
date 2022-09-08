@@ -243,5 +243,6 @@
 
       include ${theme}
     '';
+  xdg.configFile."environment.d/10-firefox.conf".source = ./environment.d/10-firefox.conf;
   xdg.configFile."environment.d/99-extra-path.conf".source = ./environment.d/99-extra-path.conf;
 }
