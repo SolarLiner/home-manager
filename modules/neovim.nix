@@ -9,6 +9,15 @@ let
       sha256 = "0XUGe0XaPOB9VJ6ODa0dTs2D/Ks0dfX0I3H00Vnohv0=";
     };
   };
+  utilsnips = pkgs.vimUtils.buildVimPlugin {
+    name = "utilsnips";
+    src = pkgs.fetchFromGitHub {
+      repo = "utilsnips";
+      owner = "SirVer";
+      rev = "a289af77e14d224ab9770f9802d090f176dd340f";
+      sha256 = "";
+    };
+  };
   wgsl-analyzer = pkgs.rustPlatform.buildRustPackage rec {
     pname = "wgsl-analyzer";
     version = "0.5.0";
@@ -33,7 +42,7 @@ in {
     nodePackages.typescript-language-server
     nodePackages.vscode-langservers-extracted
     sumneko-lua-language-server
-    wgsl-analyzer
+    # wgsl-analyzer
   ];
   programs.neovim = {
     enable = true;
@@ -62,6 +71,7 @@ in {
     plugins = with pkgs.vimPlugins; [
       vim-surround
       indentLine
+      luasnip
       {
         plugin = nvim-autopairs;
         config = "lua require'nvim-autopairs'.setup{}";
@@ -89,6 +99,7 @@ in {
       cmp-nvim-lsp
       cmp-nvim-lsp-document-symbol
       cmp-nvim-lsp-signature-help
+      cmp_luasnip
 
       # UI
       {

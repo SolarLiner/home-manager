@@ -24,17 +24,23 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>f', vim.lsp.buf.formatting, bufopts)
 end
 
+-- Set up lspconfig.
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
 require 'lspconfig'.rnix.setup {
-    on_attach = on_attach
+    on_attach = on_attach,
+    capabilities = capabilities
 }
 require 'lspconfig'.rust_analyzer.setup {
-    on_attach = on_attach
+    on_attach = on_attach,
+    capabilities = capabilities
 }
-require 'lspconfig'.wgsl_analyzer.setup {
-    on_attach = on_attach
-}
+-- require 'lspconfig'.wgsl_analyzer.setup {
+--     on_attach = on_attach
+-- }
 require 'lspconfig'.sumneko_lua.setup {
     on_attach = on_attach,
+    capabilities = capabilities,
   runtime = {
     version = "LuaJIT",
   },
@@ -46,11 +52,9 @@ require 'lspconfig'.sumneko_lua.setup {
   },
 }
 
-vim.o.completeopt = "menuone,noselect"
-
 local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '(d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ')d', vim.diagnostic.goto_next, opts)
 
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
