@@ -9,12 +9,6 @@
     flake-utils.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = github:nix-community/home-manager;
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    deno.url = path:./packages/deno;
-    deno.inputs.nixpkgs.follows = "nixpkgs";
-    zsh-256color = {
-      url = github:chrissicool/zsh-256color;
-      flake = false;
-    };
   };
   outputs = inputs:
     let username = "solarliner"; in
@@ -25,19 +19,19 @@
         };
       in
       {
-        packages = {
-          inherit (inputs.deno.packages.${system}) deno;
-          zsh-256color = rec {
-            name = "zsh-256color";
-            file = "${name}.plugin.zsh";
-            src = inputs.zsh-256color;
-          };
-        };
         packages.homeConfigurations."${username}" = inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit inputs; packages = inputs.self.packages."${system}"; };
           modules = [
             ./home.nix
+            ./modules/firefox.nix
+            ./modules/jetbrains.nix
+            ./modules/neovim.nix
+            ./modules/node.nix
+            ./modules/ocaml.nix
+            ./modules/python.nix
+            ./modules/rust.nix
+            ./modules/shell.nix
+            ./modules/terminal.nix
             { home = {
               inherit username;
               homeDirectory = "/home/${username}";
