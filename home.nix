@@ -20,6 +20,8 @@
     pulumi-bin
     # Fonts
     jetbrains-mono
+    # TP
+    fast-downward
   ];
 
   fonts.fontconfig.enable = true;
