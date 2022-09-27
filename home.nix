@@ -15,8 +15,10 @@
     htop
     neofetch
     pv
+    kubeseal
+    kaggle
     # Language tooling
-    coq
+    #coq
     mold
     nixfmt
     docker-compose
