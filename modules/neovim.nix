@@ -1,5 +1,17 @@
 { pkgs, ... }:
 let
+  clangd = pkgs.stdenv.mkDerivation rec {
+    pname = "clangd";
+    version = "15.0.1";
+    src = pkgs.fetchzip {
+      url = "https://github.com/clangd/clangd/releases/download/${version}/clangd-linux-${version}.zip";
+      sha256 = "sha256-GJxu/h20sIG0cv7+0n2PzLkVF6NuZYjLzYt0TOVU4UY=";
+    };
+    phases = ["installPhase"];
+    installPhase = ''
+      cp -rv $src $out
+    '';
+  };
   nvim-web-tools = pkgs.vimUtils.buildVimPlugin {
     name = "web-tools";
     src = pkgs.fetchFromGitHub {
@@ -112,6 +124,7 @@ in
     nodePackages.vscode-langservers-extracted
     sumneko-lua-language-server
     wgsl_analyzer
+    clangd
   ];
   programs.neovim = {
     enable = true;
