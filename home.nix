@@ -20,8 +20,7 @@
     pulumi-bin
     # Fonts
     jetbrains-mono
-    # TP
-    fast-downward
+    iosevka
   ];
 
   fonts.fontconfig.enable = true;

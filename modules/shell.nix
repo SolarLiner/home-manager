@@ -48,7 +48,7 @@ in
     plugins = [ zsh-256color ];
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "sudo" "pyenv" "nvm" "rust" "autojump" "vscode" ];
+      plugins = [ "git" "sudo" "nvm" "rust" "autojump" "vscode" ];
       extraConfig = ''
         BULLETTRAIN_PROMPT_ORDER=(
         git
