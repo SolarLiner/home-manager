@@ -22,6 +22,7 @@
     pulumi-bin
     # Fonts
     jetbrains-mono
+    iosevka
   ];
 
   fonts.fontconfig.enable = true;

@@ -12,13 +12,13 @@
       fi
     '';
   };
-  xdg.configFile."cargo/config".text = ''
-    [target.x86_64-unknown-linux-gnu]
-    linker="clang"
-    rustflags = [
-        "-C", "link-arg=-fuse-ld=${pkgs.mold}/bin/mold",
-    ]
-  '';
+  # xdg.configFile."cargo/config".text = ''
+  #   [target.x86_64-unknown-linux-gnu]
+  #   linker="clang"
+  #   rustflags = [
+  #       "-C", "link-arg=-fuse-ld=${pkgs.mold}/bin/mold",
+  #   ]
+  # '';
   xdg.configFile."environment.d/99-rustup.conf".text = ''
     RUSTUP_HOME=$HOME/.local/share/rustup
     CARGO_HOME=$HOME/.local/share/cargo

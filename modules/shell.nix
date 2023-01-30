@@ -19,6 +19,8 @@ in
     enableAliases = true;
   };
   programs.bash.enable = false;
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
   programs.nushell = {
     enable = true;
     envFile = {
@@ -46,7 +48,7 @@ in
     plugins = [ zsh-256color ];
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "sudo" "pyenv" "nvm" "rust" "autojump" "vscode" ];
+      plugins = [ "git" "sudo" "nvm" "rust" "autojump" "vscode" ];
       extraConfig = ''
         BULLETTRAIN_PROMPT_ORDER=(
         git
