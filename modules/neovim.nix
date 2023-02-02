@@ -198,7 +198,7 @@ in
       toggleterm-nvim
 
       # Neorg
-      neorg
+      #neorg
     ];
   };
   programs.zsh = {
