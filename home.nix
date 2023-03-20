@@ -6,6 +6,7 @@
     diesel-cli
     docker-compose
     tree
+    zellij
     # jq
     cachix
     ripgrep
