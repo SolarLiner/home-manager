@@ -1,0 +1,3 @@
+[submodule "modules/astronvim"]
+	path = modules/astronvim
+	url = git@github.com:SolarLiner/config-astronvim.git

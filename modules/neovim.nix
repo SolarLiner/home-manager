@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 let
   clangd = pkgs.stdenv.mkDerivation rec {
     pname = "clangd";
@@ -7,7 +7,7 @@ let
       url = "https://github.com/clangd/clangd/releases/download/${version}/clangd-linux-${version}.zip";
       sha256 = "sha256-GJxu/h20sIG0cv7+0n2PzLkVF6NuZYjLzYt0TOVU4UY=";
     };
-    phases = ["installPhase"];
+    phases = [ "installPhase" ];
     installPhase = ''
       cp -rv $src $out
     '';
@@ -126,84 +126,30 @@ in
     wgsl_analyzer
     clangd
   ];
+  programs.zsh.initExtra = ''
+    if [[ ! -e $HOME/.config/nvim ]]; then
+      git clone --depth 1 https://github.com/AstroNvim/AstroNvim $HOME/.config/nvim
+    fi
+  '';
   programs.neovim = {
     enable = true;
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
-    extraConfig = ''
-      luafile ${./nvim/init.lua}
-      luafile ${./nvim/tree-sitter.lua}
-
-      lua << EOF
-      vim.defer_fn(function()
-      vim.cmd [[
-        luafile ${./nvim/cmp.lua}
-        luafile ${./nvim/lspconfig.lua}
-        luafile ${./nvim/bufferline.lua}
-        luafile ${./nvim/lualine.lua}
-        luafile ${./nvim/neorg.lua}
-        luafile ${./nvim/nvim-tree.lua}
-        luafile ${./nvim/toggleterm.lua}
-        luafile ${./nvim/telescope.lua}
-      ]]
-      end, 70)
-      EOF
-    '';
-    plugins = with pkgs.vimPlugins; [
-      vim-surround
-      indentLine
-      luasnip
-      {
-        plugin = nvim-autopairs;
-        config = "lua require'nvim-autopairs'.setup{}";
-      }
-      {
-        plugin = vim-auto-save;
-        config = ''
-          let g:auto_save = 1
-          let g:auto_save_silent = 1
-          let g:auto_save_events = ["InsertLeave", "CursorHold"]
-        '';
-      }
-      nvim-web-tools
-
-      # Colortheme
-      material-nvim
-
-      # Filetypes
-      (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars ++ [ tree-sitter-wgsl ]))
-      vim-nix
-
-      # LSP
-      nvim-lspconfig
-      nvim-cmp
-      cmp-nvim-lsp
-      cmp-nvim-lsp-document-symbol
-      cmp-nvim-lsp-signature-help
-      cmp_luasnip
-
-      # UI
-      {
-        plugin = dressing-nvim;
-        config = "lua require'dressing'.setup {}";
-      }
-      nvim-web-devicons
-      nvim-tree-lua
-      popup-nvim
-      plenary-nvim
-      telescope-nvim
-      bufferline-nvim
-      lualine-nvim
-      toggleterm-nvim
-
-      # Neorg
-      neorg
-    ];
   };
   programs.zsh = {
     sessionVariables = {
       EDITOR = "nvim";
     };
+  };
+  home.activation = {
+    astronvimUserConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      NVIM_CONFIG_HOME=$HOME/.config/nvim
+      if [[ -e $NVIM_CONFIG_HOME/lua/user ]]; then
+        rm $NVIM_CONFIG_HOME/lua/user
+      fi
+      $DRY_RUN_CMD ln -s $VERBOSE_ARG \
+          ${builtins.toPath ./astronvim} $NVIM_CONFIG_HOME/lua/user
+    '';
   };
 }
