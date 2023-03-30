@@ -30,5 +30,4 @@ require'nvim-tree'.setup {
   },
 }
 
-vim.api.nvim_set_keymap('n', '<C-b>', ':NvimTreeToggle<CR>', {})
-vim.api.nvim_set_keymap('i', '<C-b>', ':NvimTreeToggle<CR>', {})
+vim.api.nvim_set_keymap('n', '<leader>e', ':NvimTreeToggle<CR>', {})
