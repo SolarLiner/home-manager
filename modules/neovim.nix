@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, astronvimPath ? builtins.toPath ./astronvim, ... }:
 let
   clangd = pkgs.stdenv.mkDerivation rec {
     pname = "clangd";
@@ -136,6 +136,7 @@ in
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
+    plugins = with pkgs.vimPlugins; [ (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars ++ [ tree-sitter-wgsl ])) ];
   };
   programs.zsh = {
     sessionVariables = {
@@ -145,11 +146,12 @@ in
   home.activation = {
     astronvimUserConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       NVIM_CONFIG_HOME=$HOME/.config/nvim
-      if [[ -e $NVIM_CONFIG_HOME/lua/user ]]; then
-        rm $NVIM_CONFIG_HOME/lua/user
-      fi
+      ASTRONVIM_USER_DIR=$NVIM_CONFIG_HOME/lua/user
+      echo "Clearing astronvim user dir"
+      $DRY_RUN_CMD rm -rf $VERBOSE_ARG $ASTRONVIM_USER_DIR
+      echo "Creating link to astronvim user dir"
       $DRY_RUN_CMD ln -s $VERBOSE_ARG \
-          ${builtins.toPath ./astronvim} $NVIM_CONFIG_HOME/lua/user
+          ${astronvimPath} $ASTRONVIM_USER_DIR
     '';
   };
 }

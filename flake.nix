@@ -9,6 +9,10 @@
     flake-utils.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = github:nix-community/home-manager;
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    astronvim = {
+      url = "git+file:./modules/astronvim";
+      flake = false;
+    };
   };
   outputs = inputs:
     let username = "solarliner"; in
@@ -32,12 +36,15 @@
             ./modules/rust.nix
             ./modules/shell.nix
             ./modules/terminal.nix
-            { home = {
-              inherit username;
-              homeDirectory = "/home/${username}";
-              stateVersion = "22.05";
-            }; }
+            {
+              home = {
+                inherit username;
+                homeDirectory = "/home/${username}";
+                stateVersion = "22.05";
+              };
+            }
           ];
+          extraSpecialArgs = { astronvimPath = inputs.astronvim; };
         };
       });
 }

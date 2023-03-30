@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   programs.opam = {
-    enable = true;
+    enable = false;
     enableZshIntegration = true;
   };
 }
