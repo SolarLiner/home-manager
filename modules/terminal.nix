@@ -15,9 +15,12 @@
       disable_ligatures cursor
       enable_audio_bell no
       visual_bell_duration 0.1
-      window_margin_width 8
+      window_margin_width 0
       tab_bar_style powerline
 
       include ${theme}
+
+      shell zellij a -c main
+      editor nvim
     '';
 }

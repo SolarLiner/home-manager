@@ -67,6 +67,10 @@ in
         BULLETTRAIN_DIR_FG=white
 
         export NIX_PATH=$HOME/.nix-defexpr/channels''${NIX_PATH:+:}$NIX_PATH
+
+        alias zr="zellij run --"
+        alias ze="zellij edit --"
+        alias za="zellij action"
       '';
     };
   };

@@ -7,6 +7,7 @@
     docker-compose
     google-cloud-sdk
     tree
+    zellij
     jq
     jiq
     cachix
@@ -34,7 +35,7 @@
     delta.enable = true;
     lfs.enable = true;
     userName = "Nathan Graule";
-    userEmail = "nathan@geotrend.fr";
+    userEmail = "solarliner@gmail.com";
   };
   programs.gh = {
     enable = true;
