@@ -26,7 +26,7 @@
   xdg.configFile."foot/foot.ini".text =
     let theme = builtins.fetchurl {
       url = "https://codeberg.org/dnkl/foot/raw/branch/master/themes/paper-color-dark";
-      sha256 = "sha256:0xwvahsaaw7msbqi66xzgki6y5sqwhrcx5nwap4hkalhin7wjjnp";
+      sha256 = "sha256:0yjn44mxgx68s3cik12avbz8ldz5qbz6qywr6id3avbdrwjvi25h";
     }; in
     ''
       font=JetBrains Mono:size=11

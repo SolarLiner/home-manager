@@ -4,6 +4,7 @@
     # Utilities
     dapr-cli
     diesel-cli
+    docker-buildx
     docker-compose
     google-cloud-sdk
     tree
