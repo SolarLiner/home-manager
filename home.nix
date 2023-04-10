@@ -20,7 +20,6 @@
     mold
     nixfmt
     docker-compose
-    pulumi-bin
     # Fonts
     jetbrains-mono
     iosevka

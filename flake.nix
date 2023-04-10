@@ -1,14 +1,9 @@
 {
   description = "Personal home-manager setup";
   inputs = rec {
-    nixpkgs = {
-      type = "indirect";
-      id = "nixpkgs";
-    };
+    nixpkgs.url = github:nixos/nixpkgs/nixos-22.11;
     flake-utils.url = github:numtide/flake-utils;
-    flake-utils.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = github:nix-community/home-manager;
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = inputs:
     let username = "solarliner"; in
@@ -32,11 +27,13 @@
             ./modules/rust.nix
             ./modules/shell.nix
             ./modules/terminal.nix
-            { home = {
-              inherit username;
-              homeDirectory = "/home/${username}";
-              stateVersion = "22.05";
-            }; }
+            {
+              home = {
+                inherit username;
+                homeDirectory = "/home/${username}";
+                stateVersion = "22.11";
+              };
+            }
           ];
         };
       });

@@ -2,7 +2,7 @@
 let
   clangd = pkgs.stdenv.mkDerivation rec {
     pname = "clangd";
-    version = "15.0.1";
+    version = "15.0.6";
     src = pkgs.fetchzip {
       url = "https://github.com/clangd/clangd/releases/download/${version}/clangd-linux-${version}.zip";
       sha256 = "sha256-GJxu/h20sIG0cv7+0n2PzLkVF6NuZYjLzYt0TOVU4UY=";
@@ -32,7 +32,7 @@ let
   };
   wgsl_analyzer = pkgs.stdenvNoCC.mkDerivation rec {
     pname = "wgsl_analyzer";
-    version = "0.5.0";
+    version = "0.6.2";
     src = builtins.fetchurl {
       url = "https://github.com/wgsl-analyzer/wgsl-analyzer/releases/download/v${version}/wgsl_analyzer-linux-x64";
       sha256 = "1m0068c2c3v64d8wmxqnpf8l6nrw8s8k527psvyhxr4sglz0fw6l";
