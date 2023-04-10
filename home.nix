@@ -5,9 +5,11 @@
     dapr-cli
     diesel-cli
     docker-compose
+    google-cloud-sdk
     tree
     zellij
-    # jq
+    jq
+    jiq
     cachix
     ripgrep
     htop
