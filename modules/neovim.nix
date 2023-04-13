@@ -5,7 +5,7 @@ let
     version = "15.0.6";
     src = pkgs.fetchzip {
       url = "https://github.com/clangd/clangd/releases/download/${version}/clangd-linux-${version}.zip";
-      sha256 = "sha256-GJxu/h20sIG0cv7+0n2PzLkVF6NuZYjLzYt0TOVU4UY=";
+      sha256 = "sha256-5z2Iud+a/9SbOzsdbJOfdAqmv7U4MLSeC4oxPXJh/qc=";
     };
     phases = ["installPhase"];
     installPhase = ''
