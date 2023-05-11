@@ -2,8 +2,6 @@
 {
   home.packages = with pkgs; [
     # Utilities
-    dapr-cli
-    diesel-cli
     docker-buildx
     docker-compose
     google-cloud-sdk
@@ -17,7 +15,6 @@
     neofetch
     pv
     kubeseal
-    kaggle
     # Language tooling
     #coq
     mold

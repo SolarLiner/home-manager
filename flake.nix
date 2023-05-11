@@ -29,6 +29,7 @@
           modules = [
             ./home.nix
             ./modules/firefox.nix
+            ./modules/intellij.nix
             ./modules/jetbrains.nix
             ./modules/neovim.nix
             ./modules/node.nix
