@@ -1,11 +1,9 @@
 {
   description = "Personal home-manager setup";
   inputs = rec {
-    nixpkgs.url = github:nixos/nixpkgs/nixos-22.11;
+    nixpkgs.url = github:nixos/nixpkgs/nixos-23.05;
     flake-utils.url = github:numtide/flake-utils;
-    flake-utils.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = github:nix-community/home-manager;
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = github:nix-community/home-manager/release-23.05;
   };
   outputs = inputs:
     let username = "solarliner"; in
@@ -30,6 +28,7 @@
             ./home.nix
             ./modules/firefox.nix
             ./modules/intellij.nix
+            ./modules/flutter.nix
             ./modules/jetbrains.nix
             ./modules/neovim.nix
             ./modules/node.nix
@@ -42,7 +41,7 @@
               home = {
                 inherit username;
                 homeDirectory = "/home/${username}";
-                stateVersion = "22.11";
+                stateVersion = "23.05";
               };
             }
           ];
