@@ -31,10 +31,13 @@
   programs.git = {
     package = pkgs.gitAndTools.gitFull;
     enable = true;
-    delta.enable = true;
+    difftastic.enable = true;
     lfs.enable = true;
     userName = "Nathan Graule";
     userEmail = "solarliner@gmail.com";
+    extraConfig = {
+      fetch.prune = true;
+    };
   };
   programs.gh = {
     enable = true;
