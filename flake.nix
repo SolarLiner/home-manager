@@ -9,9 +9,17 @@
     let username = "solarliner"; in
     with inputs.flake-utils.lib; eachDefaultSystem (system:
       let
-        pkgs = import inputs.nixpkgs {
-          inherit system;
-        };
+        pkgs = import inputs.nixpkgs
+          {
+            inherit system;
+            overrides =
+              let kubeseal_override = _: super: {
+                kubeseal = super.kubeseal.overrideAttrs (_: rec {
+                  version = "0.17.1";
+                  src = inputs.kubeseal-src;
+                });
+              }; in [ kubeseal_override ];
+          };
       in
       {
         packages.homeConfigurations."${username}" = inputs.home-manager.lib.homeManagerConfiguration {
@@ -19,6 +27,7 @@
           modules = [
             ./home.nix
             ./modules/firefox.nix
+            ./modules/intellij.nix
             ./modules/flutter.nix
             ./modules/jetbrains.nix
             ./modules/neovim.nix

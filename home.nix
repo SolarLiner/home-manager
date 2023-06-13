@@ -2,8 +2,7 @@
 {
   home.packages = with pkgs; [
     # Utilities
-    dapr-cli
-    diesel-cli
+    docker-buildx
     docker-compose
     google-cloud-sdk
     tree
@@ -15,8 +14,9 @@
     htop
     neofetch
     pv
+    kubeseal
     # Language tooling
-    coq
+    #coq
     mold
     nixfmt
     docker-compose
@@ -31,10 +31,13 @@
   programs.git = {
     package = pkgs.gitAndTools.gitFull;
     enable = true;
-    delta.enable = true;
+    difftastic.enable = true;
     lfs.enable = true;
     userName = "Nathan Graule";
     userEmail = "solarliner@gmail.com";
+    extraConfig = {
+      fetch.prune = true;
+    };
   };
   programs.gh = {
     enable = true;

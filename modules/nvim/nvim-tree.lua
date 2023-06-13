@@ -24,9 +24,6 @@ require'nvim-tree'.setup {
       "Cargo.toml",
       "Makefile",
     },
-    view = {
-      adaptive_size = true,
-    },
   },
 }
 

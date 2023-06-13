@@ -1,6 +1,6 @@
-require('neorg').setup {
-    load = {
-        ["core.defaults"] = {},
-        ["core.norg.concealer"] = {},
-    }
-}
+-- require('neorg').setup {
+--     load = {
+--         ["core.defaults"] = {},
+--         ["core.norg.concealer"] = {},
+--     }
+-- }
