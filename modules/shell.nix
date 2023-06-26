@@ -76,4 +76,27 @@ in
       '';
     };
   };
+  systemd.user.services =
+    let mkFuseService = { description, exec, folder }: {
+      Unit = {
+        Description = description;
+        After = ["network.target"];
+      };
+      Install.WantedBy = ["default.target"];
+      Service = {
+        ExecStartPre = "mkdir -p '${folder}'";
+        ExecStart = "${exec folder}";
+        ExecStop = "fusermount -u '${folder}'";
+        ExecStopPost = "rmdir '${folder}'";
+        Restart = "always";
+        Type = "forking";
+      };
+    };
+    in {
+      google-drive-ocamlfuse = mkFuseService {
+        description = "Google Drive FUSE mount";
+        exec = folder: "${pkgs.google-drive-ocamlfuse}/bin/google-drive-ocamlfuse '${folder}'";
+        folder = "%h/Google Drive";
+      };
+  };
 }

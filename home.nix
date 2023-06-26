@@ -5,6 +5,8 @@
     docker-buildx
     docker-compose
     google-cloud-sdk
+    awscli2
+    aws-sam-cli
     tree
     zellij
     jq
