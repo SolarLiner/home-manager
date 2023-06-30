@@ -10,6 +10,18 @@ let
       sha256 = "Qd9pjDSQk+kz++/UjGVbM4AhAklc1xSTimLQXxN57pI=";
     };
   };
+  zsh-autopair = {
+    inherit(pkgs.zsh-autopair) name src;
+    file = "autopair.plugin.zsh";
+  };
+  zsh-you-should-use = {
+    inherit(pkgs.zsh-you-should-use) name src;
+    file = "you-should-use.plugin.zsh";
+  };
+  zsh-vi-mode = {
+    inherit(pkgs.zsh-vi-mode) name src;
+    file = "you-should-use.plugin.zsh";
+  };
 in
 {
   programs.autojump.enable = true;
@@ -36,6 +48,25 @@ in
         source ~/.cache/starship/init.nu
       '';
     };
+    package = let
+      version = "0.82.0";
+      pname = "nushell";
+      src = pkgs.fetchFromGitHub {
+        owner = pname;
+        repo = pname;
+        rev = version;
+        hash = "sha256-D/R+/60Lo2rLUA/313CTJQookqSNtbD7LnVf0vBC9Qc=";
+      };
+    in pkgs.nushell.overrideAttrs(self: prev: {
+      inherit pname version src;
+      buildFeatures = prev.buildFeatures ++ ["dataframe"];
+      cargoDeps = pkgs.rustPlatform.fetchCargoTarball {
+        inherit src;
+        name = "${pname}-${version}";
+        hash = "sha256-LTnBJDA2RkAP3ZCpl5enUc0PLS63EVXQyIopUwBd8OQ=";
+      };
+      doCheck = false;
+    });
   };
   programs.starship = {
     enable = true;
@@ -47,7 +78,7 @@ in
     enableCompletion = true;
     enableAutosuggestions = true;
     enableSyntaxHighlighting = true;
-    plugins = [ zsh-256color ];
+    plugins = [ zsh-256color zsh-autopair zsh-you-should-use zsh-vi-mode ];
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "sudo" "nvm" "rust" "autojump" "vscode" ];
