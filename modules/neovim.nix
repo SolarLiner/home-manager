@@ -174,6 +174,7 @@ in
       # Filetypes
       (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars ++ [ tree-sitter-wgsl ]))
       vim-nix
+      vim-glsl
 
       # LSP
       nvim-lspconfig
