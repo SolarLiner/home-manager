@@ -113,7 +113,6 @@ in
 {
   home.packages = with pkgs; [
     nodePackages.browser-sync
-    rust-analyzer
     rnix-lsp
     nodePackages.diagnostic-languageserver
     nodePackages.eslint
@@ -125,6 +124,7 @@ in
     sumneko-lua-language-server
     wgsl_analyzer
     clangd
+    slint-lsp
   ];
   programs.neovim = {
     enable = true;
@@ -183,6 +183,7 @@ in
       cmp-nvim-lsp-document-symbol
       cmp-nvim-lsp-signature-help
       cmp_luasnip
+      lspkind-nvim
 
       # UI
       {

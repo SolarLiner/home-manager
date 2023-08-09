@@ -2,6 +2,7 @@ vim.opt.completeopt = 'menu,menuone,noselect'
 
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
+local lspkind = require 'lspkind'
 
 local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -20,10 +21,28 @@ cmp.setup {
                 and not context.in_syntax_group("Comment")
         end
     end,
+    formatting = {
+        fields = { "kind", "abbr", "menu" },
+        format = function(entry, vim_item)
+            local kind = lspkind.cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+            local strings = vim.split(kind.kind, "%s", { trimempty = true })
+            kind.kind = " " .. (strings[1] or "") .. " "
+            kind.menu = "    (" .. (strings[2] or "") .. ")"
+
+            return kind
+        end,
+    },
     snippet = {
         expand = function(args)
             require 'luasnip'.lsp_expand(args.body)
         end
+    },
+    view = {
+        entries = { name = 'custom', selection_order = 'near_cursor' }
+    },
+    window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert {
         ['<C-Space>'] = cmp.mapping.complete(),
@@ -50,24 +69,27 @@ cmp.setup {
             end
         end, { "i", "s" }),
         ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
     },
     sources = cmp.config.sources {
         { name = 'nvim_lsp' },
         { name = 'nvim_lsp_document_symbol' },
-        { name = 'nvim_lsp_sygnature_help' },
+        { name = 'nvim_lsp_signature_help' },
         { name = 'path' },
         { name = 'luasnip' },
     }, {
-        { name = 'path' },
-        { name = 'buffer' },
-    }
+    { name = 'path' },
+    { name = 'buffer' }
+}
 }
 
 -- Set configuration for specific filetype.
 cmp.setup.filetype('gitcommit', {
     sources = cmp.config.sources {
         { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-    }, {
+    },
+    {
         { name = 'buffer' },
     }
 })
