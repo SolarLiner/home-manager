@@ -5,11 +5,6 @@ local g = vim.g
 
 opt.guifont = "Iosevka:h10"
 
--- Color scheme
-g.material_style = 'darker'
-require'material'.setup {}
-vim.cmd 'colorscheme material'
-
 -- Undo files
 opt.undofile = true
 opt.undodir = vim.fn.expand("~/.cache/neovim")

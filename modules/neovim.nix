@@ -173,7 +173,13 @@ in
       nvim-web-tools
 
       # Colortheme
-      material-nvim
+      {
+        plugin = papercolor-theme;
+        config = ''
+          colorscheme PaperColor
+          set background=dark
+        '';
+      }
 
       # Filetypes
       (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars ++ [ tree-sitter-wgsl ]))
