@@ -34,7 +34,7 @@ require 'lspconfig'.pyright.setup {
     capabilities = capabilities,
 }
 
-require 'lspconfig'.rnix.setup {
+require 'lspconfig'.nixd.setup {
     on_attach = on_attach,
     capabilities = capabilities
 }

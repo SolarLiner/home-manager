@@ -32,10 +32,10 @@ let
   };
   wgsl_analyzer = pkgs.stdenvNoCC.mkDerivation rec {
     pname = "wgsl_analyzer";
-    version = "0.6.2";
+    version = "0.7.0";
     src = builtins.fetchurl {
       url = "https://github.com/wgsl-analyzer/wgsl-analyzer/releases/download/v${version}/wgsl_analyzer-linux-x64";
-      sha256 = "1m0068c2c3v64d8wmxqnpf8l6nrw8s8k527psvyhxr4sglz0fw6l";
+      sha256 = "01mc41s5csm7lwcw2s4hhdlfjhwvkavy7wkjjcghjwnpzfyizx0y";
     };
     nativeBuildInputs = [ pkgs.autoPatchelfHook ];
     phases = [ "installPhase" ];
@@ -113,7 +113,7 @@ in
 {
   home.packages = with pkgs; [
     nodePackages.browser-sync
-    rnix-lsp
+    nixd
     nodePackages.diagnostic-languageserver
     nodePackages.eslint
     nodePackages.eslint_d
@@ -125,6 +125,10 @@ in
     wgsl_analyzer
     clangd
     slint-lsp
+
+    # Clipboard support
+    xclip
+    wl-clipboard
   ];
   programs.neovim = {
     enable = true;

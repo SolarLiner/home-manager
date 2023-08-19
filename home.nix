@@ -4,9 +4,6 @@
     # Utilities
     docker-buildx
     docker-compose
-    google-cloud-sdk
-    awscli2
-    aws-sam-cli
     tree
     zellij
     jq
@@ -17,6 +14,7 @@
     neofetch
     pv
     kubeseal
+    nix-output-monitor
     # Language tooling
     #coq
     mold
@@ -25,6 +23,8 @@
     # Fonts
     jetbrains-mono
     iosevka
+    # Other
+    git-crypt
   ];
 
   fonts.fontconfig.enable = true;

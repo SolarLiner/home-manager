@@ -1,6 +1,10 @@
 local opt = vim.opt
 local g = vim.g
 
+-- GUI font
+
+opt.guifont = "Iosevka:h10"
+
 -- Color scheme
 g.material_style = 'darker'
 require'material'.setup {}

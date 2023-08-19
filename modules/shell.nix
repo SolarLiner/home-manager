@@ -48,25 +48,6 @@ in
         source ~/.cache/starship/init.nu
       '';
     };
-    package = let
-      version = "0.82.0";
-      pname = "nushell";
-      src = pkgs.fetchFromGitHub {
-        owner = pname;
-        repo = pname;
-        rev = version;
-        hash = "sha256-D/R+/60Lo2rLUA/313CTJQookqSNtbD7LnVf0vBC9Qc=";
-      };
-    in pkgs.nushell.overrideAttrs(self: prev: {
-      inherit pname version src;
-      buildFeatures = prev.buildFeatures ++ ["dataframe"];
-      cargoDeps = pkgs.rustPlatform.fetchCargoTarball {
-        inherit src;
-        name = "${pname}-${version}";
-        hash = "sha256-LTnBJDA2RkAP3ZCpl5enUc0PLS63EVXQyIopUwBd8OQ=";
-      };
-      doCheck = false;
-    });
   };
   programs.starship = {
     enable = true;
@@ -118,7 +99,7 @@ in
         ExecStartPre = "mkdir -p '${folder}'";
         ExecStart = "${exec folder}";
         ExecStop = "fusermount -u '${folder}'";
-        ExecStopPost = "rmdir '${folder}'";
+        ExecStopPost = "rmdir '${folder}' || exit 0";
         Restart = "always";
         Type = "forking";
       };
