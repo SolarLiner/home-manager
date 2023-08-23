@@ -7,9 +7,9 @@
     nixd.url = github:nix-community/nixd;
   };
   outputs = inputs:
-    let username = "solarliner"; in
     with inputs.flake-utils.lib; eachDefaultSystem (system:
       let
+        inherit (inputs.home-manager.lib) homeManagerConfiguration;
         pkgs = import inputs.nixpkgs {
           inherit system;
           overlays = [
@@ -18,9 +18,7 @@
             })
           ];
         };
-      in
-      {
-        packages.homeConfigurations."${username}" = inputs.home-manager.lib.homeManagerConfiguration {
+      	configuration = (username: {
           inherit pkgs;
           modules = [
             ./home.nix
@@ -44,6 +42,10 @@
               };
             }
           ];
-        };
+        });
+      in
+      {
+        packages.homeConfigurations.solarliner = homeManagerConfiguration (configuration "solarliner");
+        packages.homeConfigurations.nixos = homeManagerConfiguration (configuration "nixos");
       });
 }

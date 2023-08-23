@@ -1,5 +1,8 @@
-{ pkgs, ... }:
-{
+{ config, pkgs, lib, ... }:
+with lib.lists;
+let
+  isWSL = config.home.username == "nixos";
+in {
   home.packages = with pkgs; [
     # Utilities
     docker-buildx
@@ -20,11 +23,12 @@
     mold
     nixfmt
     docker-compose
+    # Other
+    git-crypt
+  ] ++ optionals (!isWSL) [
     # Fonts
     jetbrains-mono
     iosevka
-    # Other
-    git-crypt
   ];
 
   fonts.fontconfig.enable = true;

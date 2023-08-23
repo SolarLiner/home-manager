@@ -1,6 +1,9 @@
-{ pkgs, ... }:
-{
-  home.packages = with pkgs; [kmail];
+{ config, lib, pkgs, ... }:
+with lib.lists;
+let
+  isWSL = config.home.username == "nixos";
+in {
+  home.packages = with pkgs; optionals (!isWSL) [kmail];
 
   accounts.email = {
     accounts = {
@@ -13,7 +16,7 @@
     };
   };
   programs.thunderbird = {
-    enable = true;
+    enable = !isWSL;
     profiles = {
       default = {
         isDefault = true;

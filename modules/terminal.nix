@@ -1,7 +1,10 @@
-{ pkgs, ... }:
-{
+{ config, lib, pkgs, ... }:
+with lib.lists;
+let
+  isWSL = config.home.username == "nixos";
+in {
   programs.kitty = {
-    enable = true;
+    enable = !isWSL;
     font = {
       package = pkgs.iosevka;
       name = "Iosevka";
