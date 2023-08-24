@@ -34,6 +34,7 @@
             ./modules/rust.nix
             ./modules/shell.nix
             ./modules/terminal.nix
+            ./modules/vscode.nix
             {
               home = {
                 inherit username;
