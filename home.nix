@@ -29,7 +29,7 @@ in {
     # Fonts
     jetbrains-mono
     iosevka
-  ];
+  ] ++ optionals isWSL [curl wget];
 
   fonts.fontconfig.enable = true;
 
