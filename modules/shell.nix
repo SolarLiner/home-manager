@@ -1,5 +1,7 @@
-{ pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
+  inherit (lib) mkIf;
+  isWSL = config.home.username == "nixos";
   zsh-256color = rec {
     name = "zsh-256color";
     file = "${name}.plugin.zsh";
@@ -104,7 +106,7 @@ in
         Type = "forking";
       };
     };
-    in {
+    in mkIf (!isWSL) {
       google-drive-ocamlfuse = mkFuseService {
         description = "Google Drive FUSE mount";
         exec = folder: "${pkgs.google-drive-ocamlfuse}/bin/google-drive-ocamlfuse '${folder}'";
