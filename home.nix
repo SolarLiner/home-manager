@@ -22,6 +22,7 @@ in {
     #coq
     mold
     nixfmt
+    nixd
     docker-compose
     # Other
     git-crypt
