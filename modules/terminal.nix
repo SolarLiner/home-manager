@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 with lib.lists;
 let
-  isWSL = config.home.username == "nixos";
+  isWSL = config.home.username != "solarliner";
 in {
   programs.kitty = {
     enable = !isWSL;

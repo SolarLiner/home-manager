@@ -1,9 +1,9 @@
 {
   description = "Personal home-manager setup";
   inputs = rec {
-    nixpkgs.url = github:nixos/nixpkgs/nixos-23.05;
+    nixpkgs.url = github:nixos/nixpkgs/master;
     flake-utils.url = github:numtide/flake-utils;
-    home-manager.url = github:nix-community/home-manager/release-23.05;
+    home-manager.url = github:nix-community/home-manager/master;
     nixd.url = github:nix-community/nixd;
   };
   outputs = inputs:
@@ -18,14 +18,13 @@
             })
           ];
         };
-      	configuration = (username: {
+        configuration = (username: {
           inherit pkgs;
           modules = [
             ./home.nix
-            ./modules/email.nix
+            ./modules/git.nix
             ./modules/firefox.nix
             ./modules/intellij.nix
-            # ./modules/flutter.nix
             ./modules/jetbrains.nix
             ./modules/neovim.nix
             ./modules/node.nix
@@ -44,9 +43,32 @@
             }
           ];
         });
+        workConfiguration = {
+          inherit pkgs;
+          modules = [
+            ./home.nix
+            ./modules/git.nix
+            ./modules/neovim.nix
+            ./modules/python.nix
+            ./modules/rust.nix
+            ./modules/shell.nix
+            {
+              home = rec {
+                username = "ngraule";
+                homeDirectory = "/home/${username}";
+                stateVersion = "23.05";
+              };
+              programs = {
+                git.userEmail = "nathan.graule@arturia.com";
+                gh.enable = false;
+              };
+            }
+          ];
+        };
       in
       {
         packages.homeConfigurations.solarliner = homeManagerConfiguration (configuration "solarliner");
+        packages.homeConfigurations.ngraule = homeManagerConfiguration workConfiguration;
         packages.homeConfigurations.nixos = homeManagerConfiguration (configuration "nixos");
       });
 }

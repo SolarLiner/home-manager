@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 with lib.lists;
 let
-  isWSL = config.home.username == "nixos";
+  inherit (config.home) username;
+  isWSL = username != "solarliner";
 in {
   home.packages = with pkgs; [
     # Utilities
@@ -32,25 +33,7 @@ in {
     iosevka
   ] ++ optionals isWSL [curl wget];
 
-  fonts.fontconfig.enable = true;
+  fonts.fontconfig.enable = !isWSL;
 
   programs.home-manager.enable = true;
-  programs.git = {
-    package = pkgs.gitAndTools.gitFull;
-    enable = true;
-    difftastic.enable = true;
-    lfs.enable = true;
-    userName = "Nathan Graule";
-    userEmail = "solarliner@gmail.com";
-    extraConfig = {
-      fetch.prune = true;
-    };
-  };
-  programs.gh = {
-    enable = true;
-    settings = {
-      prompt = "enabled";
-      git_protocol = "ssh";
-    };
-  };
 }

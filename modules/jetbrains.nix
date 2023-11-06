@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 let
   inherit (lib) mkIf;
-  isWSL = config.home.username == "nixos";
+  isWSL = config.home.username != "solarliner";
 in {
   home.file.".ideavimrc" = mkIf (!isWSL) {
     text = ''

@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+  programs.zsh.oh-my-zsh.plugins = ["nvm"];
   programs.zsh.initExtra = ''
     # NVM
     export NVM_DIR=$HOME/.local/share/nvm

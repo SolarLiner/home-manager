@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 let
   inherit (lib) mkIf;
-  isWSL = config.home.username == "nixos";
+  isWSL = config.home.username != "solarliner";
   zsh-256color = rec {
     name = "zsh-256color";
     file = "${name}.plugin.zsh";
@@ -28,7 +28,7 @@ in
 {
   programs.autojump.enable = true;
   programs.bat.enable = true;
-  programs.exa = {
+  programs.eza = {
     enable = true;
     enableAliases = true;
   };
@@ -60,29 +60,14 @@ in
     enable = true;
     enableCompletion = true;
     enableAutosuggestions = true;
-    enableSyntaxHighlighting = true;
+    syntaxHighlighting.enable = true;
     plugins = [ zsh-256color zsh-autopair zsh-you-should-use zsh-vi-mode ];
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "sudo" "nvm" "rust" "autojump" "vscode" ];
+      plugins = [ "git" "sudo" "rust" "autojump" "vscode" ];
       extraConfig = ''
-        BULLETTRAIN_PROMPT_ORDER=(
-        git
-        context
-        dir
-        virtualenv
-        nvm
-        go
-        )
-        BULLETTRAIN_VIRTUALENV_FG=black
-        BULLETTRAIN_NVM_FG=black
-        BULLETTRAIN_CONTEXT_DEFAULT_USER=solarliner
-        BULLETTRAIN_CONTEXT_IS_SSH_CLIENT=true
-        BULLETTRAIN_DIR_EXTENDED=0
-        BULLETTRAIN_DIR_BG=black
-        BULLETTRAIN_DIR_FG=white
-
         export NIX_PATH=$HOME/.nix-defexpr/channels''${NIX_PATH:+:}$NIX_PATH
+        export PATH=$HOME/.nix-profile/bin:$PATH
 
         alias zr="zellij run --"
         alias ze="zellij edit --"
