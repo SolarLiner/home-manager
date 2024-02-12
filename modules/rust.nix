@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  home.packages = [ pkgs.rustup ];
+  home.packages = with pkgs; [ rustup mold ];
   xdg.configFile."cargo/config".text = ''
     [target.x86_64-unknown-linux-gnu]
     linker="clang"

@@ -26,6 +26,20 @@ let
   };
 in
 {
+  home.packages = with pkgs; [
+    docker-buildx
+    docker-compose
+    tree
+    jq
+    jiq
+    cachix
+    ripgrep
+    htop
+    neofetch
+    pv
+    kubeseal
+    nix-output-monitor
+  ];
   programs.autojump.enable = true;
   programs.bat.enable = true;
   programs.eza = {
