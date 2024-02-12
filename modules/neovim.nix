@@ -1,13 +1,15 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
+  inherit (pkgs) stdenv;
   clangd = pkgs.stdenv.mkDerivation rec {
     pname = "clangd";
     version = "15.0.6";
     src = pkgs.fetchzip {
-      url = "https://github.com/clangd/clangd/releases/download/${version}/clangd-linux-${version}.zip";
+      url =
+        "https://github.com/clangd/clangd/releases/download/${version}/clangd-linux-${version}.zip";
       sha256 = "sha256-5z2Iud+a/9SbOzsdbJOfdAqmv7U4MLSeC4oxPXJh/qc=";
     };
-    phases = ["installPhase"];
+    phases = [ "installPhase" ];
     installPhase = ''
       cp -rv $src $out
     '';
@@ -34,10 +36,12 @@ let
     pname = "wgsl_analyzer";
     version = "0.7.0";
     src = builtins.fetchurl {
-      url = "https://github.com/wgsl-analyzer/wgsl-analyzer/releases/download/v${version}/wgsl_analyzer-linux-x64";
+      url =
+        "https://github.com/wgsl-analyzer/wgsl-analyzer/releases/download/v${version}/wgsl_analyzer-linux-x64";
       sha256 = "01mc41s5csm7lwcw2s4hhdlfjhwvkavy7wkjjcghjwnpzfyizx0y";
     };
-    nativeBuildInputs = [ pkgs.autoPatchelfHook ];
+    nativeBuildInputs =
+      lib.optionals (!stdenv.isDarwin) [ pkgs.autoPatchelfHook ];
     phases = [ "installPhase" ];
     installPhase = ''
       mkdir -p $out/bin
@@ -48,14 +52,12 @@ let
   };
   mkGrammar = with pkgs;
     {
-      # language name
-      language
-      # version of tree-sitter
+    # language name
+    language
+    # version of tree-sitter
     , version
-      # source for the language grammar
-    , source
-    , location ? null
-    }:
+    # source for the language grammar
+    , source, location ? null }:
 
     stdenv.mkDerivation rec {
 
@@ -97,8 +99,7 @@ let
         fi
         runHook postInstall
       '';
-    }
-  ;
+    };
   tree-sitter-wgsl = mkGrammar {
     language = "wgsl";
     version = "master";
@@ -109,27 +110,27 @@ let
       sha256 = "x42qHPwzv3uXVahHE9xYy3RkrYFctJGNEJmu6w1/2Qo=";
     };
   };
-in
-{
-  home.packages = with pkgs; [
-    nodePackages.browser-sync
-    nixd
-    nodePackages.diagnostic-languageserver
-    nodePackages.eslint
-    nodePackages.eslint_d
-    nodePackages.pyright
-    nodePackages.typescript
-    nodePackages.typescript-language-server
-    nodePackages.vscode-langservers-extracted
-    sumneko-lua-language-server
-    wgsl_analyzer
-    clangd
-    slint-lsp
-
-    # Clipboard support
-    xclip
-    wl-clipboard
-  ];
+in {
+  home.packages = with pkgs;
+    [
+      nodePackages.browser-sync
+      nixd
+      nodePackages.diagnostic-languageserver
+      nodePackages.eslint
+      nodePackages.eslint_d
+      nodePackages.pyright
+      nodePackages.typescript
+      nodePackages.typescript-language-server
+      nodePackages.vscode-langservers-extracted
+      sumneko-lua-language-server
+      wgsl_analyzer
+      clangd
+    ] ++ lib.optionals (!pkgs.stdenv.isDarwin) [
+      slint-lsp
+      # Clipboard support
+      xclip
+      wl-clipboard
+    ];
   programs.neovim = {
     enable = true;
     viAlias = true;
@@ -182,7 +183,8 @@ in
       }
 
       # Filetypes
-      (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars ++ [ tree-sitter-wgsl ]))
+      (nvim-treesitter.withPlugins
+        (plugins: pkgs.tree-sitter.allGrammars ++ [ tree-sitter-wgsl ]))
       vim-nix
       vim-glsl
 
@@ -213,9 +215,5 @@ in
       #neorg
     ];
   };
-  programs.zsh = {
-    sessionVariables = {
-      EDITOR = "nvim";
-    };
-  };
+  programs.zsh = { sessionVariables = { EDITOR = "nvim"; }; };
 }
