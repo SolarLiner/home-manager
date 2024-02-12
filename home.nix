@@ -33,7 +33,7 @@ in {
     iosevka
   ] ++ optionals isWSL [curl wget];
 
-  fonts.fontconfig.enable = !isWSL;
+  fonts.fontconfig.enable = !isWSL && !pkgs.stdenv.isDarwin;
 
   programs.home-manager.enable = true;
 }

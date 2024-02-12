@@ -37,13 +37,13 @@
             {
               home = {
                 inherit username;
-                homeDirectory = "/home/${username}";
-                stateVersion = "23.05";
+                homeDirectory = if pkgs.stdenv.isDarwin then "/Users/${username}" else "/home/${username}";
+                stateVersion = "23.11";
               };
             }
           ];
         });
-        workConfiguration = {
+        workConfiguration = username: {
           inherit pkgs;
           modules = [
             ./home.nix
@@ -53,10 +53,10 @@
             ./modules/rust.nix
             ./modules/shell.nix
             {
-              home = rec {
-                username = "ngraule";
-                homeDirectory = "/home/${username}";
-                stateVersion = "23.05";
+              home = {
+                inherit username;
+                homeDirectory = if pkgs.stdenv.isDarwin then "/Users/${username}" else "/home/${username}";
+                stateVersion = "23.11";
               };
               programs = {
                 git.userEmail = "nathan.graule@arturia.com";
@@ -68,7 +68,8 @@
       in
       {
         packages.homeConfigurations.solarliner = homeManagerConfiguration (configuration "solarliner");
-        packages.homeConfigurations.ngraule = homeManagerConfiguration workConfiguration;
+        packages.homeConfigurations.ngraule = homeManagerConfiguration (workConfiguration "ngraule");
+        packages.homeConfigurations.nathangraule = homeManagerConfiguration (workConfiguration "nathangraule");
         packages.homeConfigurations.nixos = homeManagerConfiguration (configuration "nixos");
       });
 }
