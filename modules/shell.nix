@@ -1,7 +1,6 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, isWSL ? false, ... }:
 let
   inherit (lib) mkIf;
-  isWSL = config.home.username != "solarliner";
   zsh-256color = rec {
     name = "zsh-256color";
     file = "${name}.plugin.zsh";

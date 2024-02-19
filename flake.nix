@@ -18,14 +18,14 @@
             })
           ];
         };
-        configuration = (username: {
+        configuration = ({ username, isWSL ? false }: {
           inherit pkgs;
+          extraSpecialArgs = { inherit inputs isWSL; };
           modules = [
             ./home.nix
             ./modules/git.nix
             ./modules/firefox.nix
             ./modules/intellij.nix
-            ./modules/jetbrains.nix
             ./modules/neovim.nix
             ./modules/node.nix
             ./modules/ocaml.nix
@@ -45,10 +45,12 @@
         });
         workConfiguration = username: {
           inherit pkgs;
+          extraSpecialArgs = { inherit inputs; isWSL = false; };
           modules = [
             ./home.nix
             ./modules/git.nix
             ./modules/neovim.nix
+            ./modules/intellij.nix
             ./modules/python.nix
             ./modules/rust.nix
             ./modules/shell.nix
@@ -67,9 +69,9 @@
         };
       in
       {
-        packages.homeConfigurations.solarliner = homeManagerConfiguration (configuration "solarliner");
+        packages.homeConfigurations.solarliner = homeManagerConfiguration (configuration { username = "solarliner"; });
         packages.homeConfigurations.ngraule = homeManagerConfiguration (workConfiguration "ngraule");
         packages.homeConfigurations.nathangraule = homeManagerConfiguration (workConfiguration "nathangraule");
-        packages.homeConfigurations.nixos = homeManagerConfiguration (configuration "nixos");
+        packages.homeConfigurations.nixos = homeManagerConfiguration (configuration { username = "nixos"; });
       });
 }

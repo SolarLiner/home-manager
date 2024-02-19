@@ -1,8 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, isWSL ? false, ... }:
 with lib.lists;
-let
-  isWSL = config.home.username != "solarliner";
-in {
+{
   home.packages = with pkgs; [ zellij ];
   programs.kitty = {
     enable = !isWSL;

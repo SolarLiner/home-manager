@@ -1,7 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, isWSL ? false, ... }:
 with lib;
-let isWSL = config.home.username != "solarliner";
-in {
+{
   home.packages = with pkgs; [
     nixfmt
     nixd

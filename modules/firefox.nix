@@ -1,7 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, isWSL ? false, ... }:
 let
   inherit (lib) mkIf;
-  isWSL = config.home.username != "solarliner";
 in
 {
   xdg.configFile."environment.d/10-firefox.conf" = mkIf (!isWSL) { 

@@ -1,8 +1,7 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, isWSL ? false, ... }:
 with lib.lists;
 let
   inherit (config.home) username;
-  isWSL = username != "solarliner";
 in {
   home.packages = with pkgs; [
     # Utilities
