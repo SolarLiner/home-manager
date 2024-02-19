@@ -50,6 +50,17 @@ let
       install -m755 -D $src $out/bin/${pname}
     '';
   };
+  vscode-nvim = pkgs.vimUtils.buildVimPlugin {
+    pname = "vscode.nvim";
+    version = "2024-02-01";
+    src = pkgs.fetchFromGitHub {
+      owner = "Mofiqul";
+      repo = "vscode.nvim";
+      rev = "380c1068612b1bfbe35d70a4f2e58be5030a0707";
+      sha256 = "1lq1j6wlh8xxzikpab2gciw6gg88hya92bswz0kk75l6fphp41kl";
+    };
+    meta.homepage = "https://github.com/Mofiqul/vscode.nvim/";
+  };
   mkGrammar = with pkgs;
     {
     # language name
@@ -175,10 +186,9 @@ in {
 
       # Colortheme
       {
-        plugin = papercolor-theme;
+        plugin = vscode-nvim;
         config = ''
-          colorscheme PaperColor
-          set background=dark
+          luafile ${./nvim/colortheme.lua}
         '';
       }
 
